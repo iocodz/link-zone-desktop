@@ -1,130 +1,13 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Head from 'next/head';
-
-const proxyURL = "/api";
+import LinkZone from "../types/LinkZone";
 
 function Home() {
+  const linkZone = new LinkZone()
 
   useEffect(() => {
-    getSystemStatus()
+    linkZone.getSystemStatus()
   }, [])
-
-  function linkZoneRequest(payload) {
-
-    fetch(proxyURL, {
-      method: 'POST',
-      body: JSON.stringify(payload)
-    })
-      .then(res => res.json())
-      .then(data => {
-        console.log(JSON.stringify(data));
-        return data
-      })
-      .catch(err => {
-        console.log(err)
-        return err
-      })
-    return {}
-  }
-
-  function getSystemStatus () {
-
-    const data = {
-      jsonrpc: "2.0",
-      method: "GetSystemStatus",
-      id: "13.4"
-    }
-    const res = linkZoneRequest(data)
-
-    return res
-  }
-
-  function setNetworkSettings(networkMode) {
-
-    const data = {
-      jsonrpc:"2.0",
-      method:"SetNetworkSettings",
-      params: {
-        NetworkMode: networkMode.value,
-        NetselectionMode: 0
-      },
-      id:"4.7"
-    }
-
-    const res = linkZoneRequest(data)
-    const status = res.ok ? "OK" : "ERROR"
-
-    return status
-  }
-
-  function connect(){
-
-    const data = {
-      jsonrpc:"2.0",
-      method:"Connect",
-      id:"3.2"
-    }
-    return linkZoneRequest(data)
-  }
-
-  function disconnect(){
-
-    const data = {
-      jsonrpc:"2.0",
-      method:"DisConnect",
-      id:"3.2"
-    }
-    return linkZoneRequest(data)
-  }
-
-  function sendUSSD(code){
-    const data = {
-      jsonrpc: "2.0",
-      method: "SendUSSD",
-      params: {
-        UssdContent: code,
-        UssdType: 1
-      },
-      id: "8.1"
-    }
-    return linkZoneRequest(data)
-  }
-
-  function setNetwork(networkMode) {
-    disconnect()
-    setNetworkSettings(networkMode)
-    connect()
-  }
-
-  function getUSSDSendResult() {
-
-    const data = {
-      jsonrpc: "2.0",
-      method: "GetUSSDSendResult",
-      id: "8.2"
-    }
-    const res = self.linkZoneRequest(data)
-    if (!res.ok)
-      return null
-
-    if (res.result['SendState'] === 1)
-      return getUSSDSendResult()
-
-    if (res.result['SendState'] === 2)
-      return res.result['UssdContent']
-
-    return null
-  }
-
-  function sendUssdCode(code) {
-
-    sendUSSD(code)
-    const message = getUSSDSendResult()
-
-    const status = message ? "OK" : "ERROR"
-
-    return status
-  }
 
   return (
     <React.Fragment>
