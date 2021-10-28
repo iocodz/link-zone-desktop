@@ -13,11 +13,11 @@ function Home() {
 
     fetch(proxyURL, {
       method: 'POST',
-      body: payload
+      body: JSON.stringify(payload)
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        console.log(JSON.stringify(data));
         return data
       })
       .catch(err => {
@@ -34,13 +34,9 @@ function Home() {
       method: "GetSystemStatus",
       id: "13.4"
     }
-
     const res = linkZoneRequest(data)
 
-    const networkName = res.result['NetworkName']
-    // const networkType = NETWORKS_TYPES[res['result']['NetworkType']];
-
-    return networkName
+    return res
   }
 
   function setNetworkSettings(networkMode) {
