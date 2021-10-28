@@ -1,3 +1,26 @@
-export default function linkZoneRequest(req, res) {
-  res.status(200).json({ message: 'working' })
+const axios = require('axios');
+
+const linkZoneApiUrl = "http://192.168.1.1/jrd/webapi";
+
+export default async function linkZoneRequest(req, res) {
+  console.log(req)
+  if (req.method !== 'POST') {
+    res.status(400).send({ message: 'Only POST requests allowed' })
+    return
+  }
+
+  const payload = JSON.parse(req.body)
+
+  axios.post(linkZoneApiUrl, payload, {
+    headers: payload.params
+  })
+    .then(resp => {
+      res.status(200).json({...resp})
+    })
+    .catch(err => {
+      res.status(500).json({...err})
+    })
+    .finally(() => {
+      return
+    })
 }

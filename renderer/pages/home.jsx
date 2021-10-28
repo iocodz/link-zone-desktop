@@ -1,28 +1,24 @@
 import React, {useEffect} from 'react';
 import Head from 'next/head';
 
-const proxyURL = "/api/test";
+const proxyURL = "/api";
 
 function Home() {
 
   useEffect(() => {
-    fetch(proxyURL).then(res => console.log(res))
+    getSystemStatus()
   }, [])
 
-  async function linkZoneRequest(payload) {
+  function linkZoneRequest(payload) {
 
-    const headers = payload.params
-    const body = payload.toString()
-
-    await fetch(proxyURL, {
+    fetch(proxyURL, {
       method: 'POST',
-      body: body,
-      headers: headers
+      body: payload
     })
       .then(res => res.json())
-      .then(res => {
-        console.log(res);
-        return res
+      .then(data => {
+        console.log(data);
+        return data
       })
       .catch(err => {
         console.log(err)
