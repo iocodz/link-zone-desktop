@@ -1,5 +1,3 @@
-<p align="center"><img src="https://i.imgur.com/P08L8HO.png"></p>
-
 ## Usage
 
 ### Create an App
