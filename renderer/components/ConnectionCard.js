@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 
 export default function ConnectionCard({
   data,
@@ -8,6 +8,8 @@ export default function ConnectionCard({
   const [toggleEnabled, setToggleEnabled] = useState(true)
   const [toggleConnection, setToggleConnection] = useState(false)
   const [systemStatus, setSystemStatus] = useState({})
+  // const [networkType, setNetworkType] = useState("")
+  const network = useRef()
 
   function handleToggleConnection () {
     
@@ -33,8 +35,6 @@ export default function ConnectionCard({
           });
         })
       })
-    
-    setToggleConnection(!toggleConnection)
   }
 
   function cronJob () {
@@ -52,6 +52,10 @@ export default function ConnectionCard({
     }, 5000);
     return () => clearTimeout(timer);
   }, []);
+
+  function handleNetworkType() {
+    linkZoneController.setNetwork(network.current.value);
+  }
 
   return (
     <div className="rounded-lg w-72 p-4 bg-white shadow-lg dark:bg-gray-800 max-w-xs m-5">
@@ -146,6 +150,23 @@ export default function ConnectionCard({
             </svg>
           </span>
           {systemStatus?.TotalConnNum} usuario(s)
+        </li>
+        <li
+          className="text-xs font-inter leading-normal flex items-center font-medium text-black dark:text-white py-4 border-t border-gray-300">
+          <label className="block text-left w-full">
+            <select
+              className="form-select rounded-md border border-gray-300 outline-none block w-full mt-1 p-2 focus:outline-none focus:ring"
+              onChange={() => handleNetworkType()}
+              ref={network}
+              defaultValue=""
+            >
+              <option selected disabled value="">Selecciona modo de red</option>
+              <option value="auto">Auto</option>
+              <option value="2g">2G</option>
+              <option value="3g">3G</option>
+              <option value="4g">4G</option>
+            </select>
+          </label>
         </li>
       </ul>
     </div>
