@@ -1,15 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import Head from 'next/head';
 import CardsSection from "../sections/CardsSection";
 
-function Home() {
+function Home({loading}) {
 
   return (
     <React.Fragment>
       <Head>
         <title>Home - Link Zone Manager</title>
       </Head>
-      <CardsSection />
+      {!loading && <CardsSection />}
     </React.Fragment>
   );
 }

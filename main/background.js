@@ -1,4 +1,4 @@
-import { app } from 'electron';
+import {app, BrowserWindow} from 'electron';
 import serve from 'electron-serve';
 import { createWindow } from './helpers';
 
