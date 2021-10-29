@@ -9,7 +9,8 @@ export default function ConectionCard({ linkZoneController }) {
   async function handleUSSD () {
 
     setLoading(true)
-    const res = await linkZoneController.sendUSSD()
+    const res = await linkZoneController.sendUssdCode(ussd.current.value)
+    // const res = await linkZoneController.getUSSDSendResult()
     setResponseDetails(res)
     setLoading(false)
   }

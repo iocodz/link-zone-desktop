@@ -1,6 +1,6 @@
 export default class LinkZone {
   proxyURL = "/api";
-  NETWORKS_TYPES = ['NO_SERVICE', '2G', '2G', '3G', '3G', '3G', '3G+', '3G+', '4G', '4G+']
+  NETWORKS_TYPES = ['NO_SERVICE', '2G', '2G', '3G', '3G', '3G+', '3G+', '3G+', '4G', '4G+']
   
   constructor() { }
 
@@ -98,7 +98,10 @@ export default class LinkZone {
       },
       id: "8.1"
     }
-    return this.linkZoneRequest(data)
+    return this.linkZoneRequest(data).then(res => {
+      console.log('sendUSSD', res)
+      return res;
+    });
   }
 
   setNetwork(networkMode) {
@@ -107,33 +110,38 @@ export default class LinkZone {
     this.connect()
   }
 
-  getUSSDSendResult() {
+  async getUSSDSendResult() {
 
     const data = {
       jsonrpc: "2.0",
       method: "GetUSSDSendResult",
       id: "8.2"
     }
-    const res = this.linkZoneRequest(data)
-    if (!res.ok)
-      return null
+    return this.linkZoneRequest(data).then(res => {
+      return res.result.UssdContent
+    })
+    // if (!res.ok)
+    //   return null
 
-    if (res.result['SendState'] === 1)
-      return this.getUSSDSendResult()
+    // if (res.result['SendState'] === 1)
+    //   return await this.getUSSDSendResult()
 
-    if (res.result['SendState'] === 2)
-      return res.result['UssdContent']
+    // if (res.result['SendState'] === 2)
+    //   return res.result['UssdContent']
 
-    return null
+    // return null
   }
 
   sendUssdCode(code) {
+    
+    console.log(code)
 
-    this.sendUSSD(code)
-    const message = this.getUSSDSendResult()
-
-    const status = message ? "OK" : "ERROR"
-
-    return status
+    return this.sendUSSD(code).then(res => {
+      return this.getUSSDSendResult().then(res => {
+        console.log('sendUssdCode', res)
+        return res
+      })
+    })
+    
   }
 }
