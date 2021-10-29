@@ -4,6 +4,10 @@ export default class LinkZone {
   
   constructor() { }
 
+  sleep = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
+  }
+
   linkZoneRequest(payload) {
 
     return fetch(this.proxyURL, {
@@ -66,7 +70,10 @@ export default class LinkZone {
       method:"Connect",
       id:"3.2"
     }
-    return this.linkZoneRequest(data)
+
+    return this.linkZoneRequest(data).then(res => {
+      return res
+    });
   }
 
   disconnect(){
@@ -76,7 +83,9 @@ export default class LinkZone {
       method:"DisConnect",
       id:"3.2"
     }
-    return this.linkZoneRequest(data)
+    return this.linkZoneRequest(data).then(res => {
+      return res
+    });
   }
 
   sendUSSD(code){
