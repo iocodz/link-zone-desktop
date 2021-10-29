@@ -11,7 +11,6 @@ export default function ConectionCard({ linkZoneController }) {
     setLoading(true)
     const res = await linkZoneController.sendUSSD()
     setResponseDetails(res)
-    console.log(res)
     setLoading(false)
   }
 

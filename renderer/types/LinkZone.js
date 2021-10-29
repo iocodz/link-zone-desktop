@@ -1,24 +1,22 @@
 export default class LinkZone {
   proxyURL = "/api";
-
+  NETWORKS_TYPES = ['NO_SERVICE', '2G', '2G', '3G', '3G', '3G', '3G+', '3G+', '4G', '4G+']
+  
   constructor() { }
 
   linkZoneRequest(payload) {
 
-    fetch(this.proxyURL, {
+    return fetch(this.proxyURL, {
       method: 'POST',
       body: JSON.stringify(payload)
     })
       .then(res => res.json())
       .then(data => {
-        console.log(JSON.stringify(data));
         return data
       })
       .catch(err => {
-        console.log(err)
         return err
       })
-    return {}
   }
 
   getSystemStatus () {
@@ -28,9 +26,19 @@ export default class LinkZone {
       method: "GetSystemStatus",
       id: "13.4"
     }
-    const res = this.linkZoneRequest(data)
 
-    return res
+    return this.linkZoneRequest(data).then(res => {
+      const result = {
+        "Connected": res?.result?.ConnectionStatus == 2,
+        "NetworkName": res?.result?.NetworkName,
+        "NetworkType": this.NETWORKS_TYPES[res?.result?.NetworkType],
+        "SignalStrength": res?.result?.SignalStrength,
+        "TotalConnNum": res?.result?.TotalConnNum,
+        "BatCap": res?.result?.bat_cap
+      }
+      console.log('getSystemStatus', result)
+      return result
+    })
   }
 
   setNetworkSettings(networkMode) {

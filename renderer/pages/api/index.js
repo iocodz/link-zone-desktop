@@ -16,11 +16,9 @@ export default async function linkZoneRequest(req, res) {
     }
   })
     .then(resp => {
-      console.log('resp', resp.data)
       res.status(200).json({...resp.data})
     })
     .catch(err => {
-      console.log('err', err)
       res.status(500).json({...err})
     })
     .finally(() => {
