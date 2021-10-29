@@ -37,12 +37,21 @@ export default function ConnectionCard({
     setToggleConnection(!toggleConnection)
   }
 
-  useEffect(() => {
+  function cronJob () {
     linkZoneController.getSystemStatus().then(data => {
+      if(data === systemStatus)
+        return
       setSystemStatus(data)
       setToggleConnection(data?.Connected)
     });
-  }, [])
+  }
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+        cronJob();
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="rounded-lg w-72 p-4 bg-white shadow-lg dark:bg-gray-800 max-w-xs m-5">
