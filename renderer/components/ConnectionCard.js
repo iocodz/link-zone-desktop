@@ -47,11 +47,54 @@ export default function ConnectionCard({
   return (
     <div className="rounded-lg w-72 p-4 bg-white shadow-lg dark:bg-gray-800 max-w-xs m-5">
       <p className="text-2xl leading-normal justify-center font-bold text-black dark:text-white pt-4">
-        Conexión &nbsp;
-        <label className="inline-flex items-center">
-          <input type="checkbox" disabled={!toggleEnabled} checked={toggleConnection} onChange={() => handleToggleConnection()}/>
-          <span className="ml-2"></span>
-        </label>
+        Conexión
+        <div
+          className="
+            relative
+            inline-block
+            w-10
+            ml-2
+            mb-1
+            align-middle
+            select-none
+            transition
+            duration-200
+            ease-in
+          "
+          >
+          <input
+            type="checkbox"
+            name="toggle"
+            id="toggle"
+            disabled={!toggleEnabled}
+            checked={toggleConnection}
+            onChange={() => handleToggleConnection()}
+            className="
+              toggle-checkbox
+              absolute
+              block
+              w-6
+              h-6
+              rounded-full
+              bg-white
+              border-4
+              appearance-none
+              cursor-pointer
+            "
+          />
+          <label
+            htmlFor="toggle"
+            className="
+              toggle-label
+              block
+              overflow-hidden
+              h-6
+              rounded-full
+              bg-gray-300
+              cursor-pointer
+            "
+          > </label>
+        </div>
       </p>
 
       <ul>
