@@ -8,6 +8,7 @@ export default function ConnectionCard({
   const [toggleEnabled, setToggleEnabled] = useState(true)
   const [toggleConnection, setToggleConnection] = useState(false)
   const [systemStatus, setSystemStatus] = useState({})
+  const [runningCronJob, setRunningCronJob] = useState(true)
   // const [networkType, setNetworkType] = useState("")
   const network = useRef()
 
@@ -46,8 +47,18 @@ export default function ConnectionCard({
     });
   }
 
+  function stopCronJob () {
+    setRunningCronJob(false)
+  }
+
+  function startCronJob () {
+    setRunningCronJob(true)
+  }
+
   useEffect(() => {
+    cronJob();
     const timer = setInterval(() => {
+      if(runningCronJob)
         cronJob();
     }, 5000);
     return () => clearTimeout(timer);
