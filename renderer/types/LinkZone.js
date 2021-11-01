@@ -1,6 +1,6 @@
 export default class LinkZone {
   proxyURL = "/api";
-  NETWORKS_TYPES = ['NO_SERVICE', '2G', '2G', '3G', '3G', '3G+', '3G+', '3G+', '4G', '4G+']
+  NETWORKS_TYPES = ['NO_SERVICE', '2G', '2G', '3G', '3G', '3G', '3G+', '3G+', '4G', '4G+']
   
   constructor() { }
 
@@ -38,9 +38,28 @@ export default class LinkZone {
         "NetworkType": this.NETWORKS_TYPES[res?.result?.NetworkType],
         "SignalStrength": res?.result?.SignalStrength,
         "TotalConnNum": res?.result?.TotalConnNum,
-        "BatCap": res?.result?.bat_cap
+        "BatCap": res?.result?.bat_cap,
+        "ChargeState": res?.result?.chg_state,
       }
       console.log('getSystemStatus', result)
+      return result
+    })
+  }
+
+  getNetworkSettings () {
+
+    const data = {
+      jsonrpc: "2.0",
+      method: "GetNetworkSettings",
+      id: "4.6"
+    }
+
+    return this.linkZoneRequest(data).then(res => {
+      const result = {
+        "NetworkMode": (res?.result?.NetworkMode == 255) ? 0 : res.result.NetworkMode,
+        "NetSelectionMode": res?.result?.NetselectionMode
+      }
+      console.log('getNetworkSettings', result)
       return result
     })
   }
@@ -57,10 +76,9 @@ export default class LinkZone {
       id:"4.7"
     }
 
-    const res = this.linkZoneRequest(data)
-    const status = res.ok ? "OK" : "ERROR"
-
-    return status
+    return this.linkZoneRequest(data).then(res => {
+      console.log('setNetworkSettings', JSON.stringify(res))
+    })
   }
 
   connect(){
@@ -104,10 +122,14 @@ export default class LinkZone {
     });
   }
 
-  setNetwork(networkMode) {
-    this.disconnect()
-    this.setNetworkSettings(networkMode)
-    this.connect()
+  setNetwork(networkMode, connectStatus=0) {
+    return this.disconnect().then(res => {
+      this.setNetworkSettings(networkMode).then(res => {
+          this.connect().then(res => {
+            console.log('setNetwork', networkMode)
+          })
+      })
+    })
   }
 
   async getUSSDSendResult() {

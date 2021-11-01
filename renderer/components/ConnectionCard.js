@@ -8,6 +8,7 @@ export default function ConnectionCard({
   const [toggleEnabled, setToggleEnabled] = useState(true)
   const [toggleConnection, setToggleConnection] = useState(false)
   const [systemStatus, setSystemStatus] = useState({})
+  const [networkData, setSetNetworkData] = useState({})
   // const [networkType, setNetworkType] = useState("")
   const network = useRef()
 
@@ -38,12 +39,19 @@ export default function ConnectionCard({
   }
 
   function cronJob () {
-    linkZoneController.getSystemStatus().then(data => {
-      if(data === systemStatus)
-        return
-      setSystemStatus(data)
-      setToggleConnection(data?.Connected)
-    });
+
+    linkZoneController.getNetworkSettings().then(netData => {
+      linkZoneController.getSystemStatus().then(data => {
+        if(data === systemStatus)
+          return
+
+        setSystemStatus(data)
+        setSetNetworkData(netData)
+        setToggleConnection(data?.Connected)
+      })
+    })
+
+    
   }
 
   useEffect(() => {
@@ -54,7 +62,9 @@ export default function ConnectionCard({
   }, []);
 
   function handleNetworkType() {
-    linkZoneController.setNetwork(network.current.value);
+    linkZoneController.setNetwork(network.current.value).then(res => {
+      
+    });
   }
 
   return (
@@ -140,7 +150,7 @@ export default function ConnectionCard({
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
           </span>
-          {systemStatus?.BatCap}%
+          {systemStatus?.BatCap}% {(systemStatus?.ChargeState) == 0 ? "(cargando)" : "" }
         </li>
         <li
           className="text-xs font-inter leading-normal flex items-center font-medium text-black dark:text-white py-4 border-t border-gray-300">
@@ -158,13 +168,13 @@ export default function ConnectionCard({
               className="form-select rounded-md border border-gray-300 outline-none block w-full mt-1 p-2 focus:outline-none focus:ring"
               onChange={() => handleNetworkType()}
               ref={network}
-              defaultValue=""
+              value={networkData?.NetworkMode}
             >
               <option selected disabled value="">Selecciona modo de red</option>
-              <option value="auto">Auto</option>
-              <option value="2g">2G</option>
-              <option value="3g">3G</option>
-              <option value="4g">4G</option>
+              <option value="0">Auto</option>
+              <option value="1">2G</option>
+              <option value="2">3G</option>
+              <option value="3">4G</option>
             </select>
           </label>
         </li>
