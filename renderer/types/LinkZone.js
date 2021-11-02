@@ -80,9 +80,15 @@ export default class LinkZone {
     }
 
     return this.linkZoneRequest(data).then(res => {
-      const result = {
-        Token: res.token
+      let result = {
+        Token: null,
+        Message: null
       }
+      if(res.error)
+        result.Message = res.error.message
+      else
+        result.Token = res.result.token
+
       console.log('login', result)
       return result
     })
