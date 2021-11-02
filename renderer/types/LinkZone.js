@@ -67,6 +67,27 @@ export default class LinkZone {
     })
   }
 
+  login(pass) {
+
+    const data = {
+      jsonrpc:"2.0",
+      method:"Login",
+      params: {
+        UserName: "admin",
+        Password: pass
+      },
+      id:"1.1"
+    }
+
+    return this.linkZoneRequest(data).then(res => {
+      const result = {
+        Token: res.token
+      }
+      console.log('login', result)
+      return result
+    })
+  }
+
   setNetworkSettings(networkMode) {
 
     const data = {
