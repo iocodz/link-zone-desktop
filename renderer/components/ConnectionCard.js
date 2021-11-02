@@ -9,6 +9,7 @@ export default function ConnectionCard({
   const [toggleConnection, setToggleConnection] = useState(false)
   const [systemStatus, setSystemStatus] = useState({})
   const [networkData, setSetNetworkData] = useState({})
+  const [runningCronJob, setRunningCronJob] = useState(true)
   // const [networkType, setNetworkType] = useState("")
   const network = useRef()
 
@@ -54,8 +55,18 @@ export default function ConnectionCard({
     
   }
 
+  function stopCronJob () {
+    setRunningCronJob(false)
+  }
+
+  function startCronJob () {
+    setRunningCronJob(true)
+  }
+
   useEffect(() => {
+    cronJob();
     const timer = setInterval(() => {
+      if(runningCronJob)
         cronJob();
     }, 5000);
     return () => clearTimeout(timer);
@@ -63,7 +74,7 @@ export default function ConnectionCard({
 
   function handleNetworkType() {
     linkZoneController.setNetwork(network.current.value).then(res => {
-      
+
     });
   }
 
