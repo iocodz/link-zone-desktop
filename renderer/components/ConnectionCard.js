@@ -19,23 +19,11 @@ export default function ConnectionCard({
     console.log('togle', toggleConnection)
     if (!toggleConnection)
       linkZoneController.connect().then(data => {
-        linkZoneController.sleep(3000).then(data => {
-          linkZoneController.getSystemStatus().then(data => {
-            setSystemStatus(data)
-            setToggleConnection(data?.Connected)
-            setToggleEnabled(true)
-          });
-        })
+        cronJob()
       })
     else
       linkZoneController.disconnect().then(data => {
-        linkZoneController.sleep(3000).then(data => {
-          linkZoneController.getSystemStatus().then(data => {
-            setSystemStatus(data)
-            setToggleConnection(data?.Connected)
-            setToggleEnabled(true)
-          });
-        })
+        cronJob()
       })
   }
 
@@ -51,8 +39,6 @@ export default function ConnectionCard({
         setToggleConnection(data?.Connected)
       })
     })
-
-    
   }
 
   function stopCronJob () {
@@ -68,13 +54,13 @@ export default function ConnectionCard({
     const timer = setInterval(() => {
       if(runningCronJob)
         cronJob();
-    }, 5000);
+    }, 10000);
     return () => clearTimeout(timer);
   }, []);
 
   function handleNetworkType() {
     linkZoneController.setNetwork(network.current.value).then(res => {
-
+      cronJob()
     });
   }
 
@@ -182,10 +168,10 @@ export default function ConnectionCard({
               value={networkData?.NetworkMode}
             >
               <option selected disabled value="">Selecciona modo de red</option>
-              <option value="0">Auto</option>
-              <option value="1">2G</option>
-              <option value="2">3G</option>
-              <option value="3">4G</option>
+              <option value="0">Modo red: Auto</option>
+              <option value="1">Modo red: 2G</option>
+              <option value="2">Modo red: 3G</option>
+              <option value="3">Modo red: 4G</option>
             </select>
           </label>
         </li>

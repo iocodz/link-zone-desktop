@@ -55,10 +55,13 @@ export default class LinkZone {
     }
 
     return this.linkZoneRequest(data).then(res => {
-      const result = {
-        "NetworkMode": (res?.result?.NetworkMode == 255) ? 0 : res.result.NetworkMode,
+      let result = {
+        "NetworkMode": res?.result?.NetworkMode,
         "NetSelectionMode": res?.result?.NetselectionMode
       }
+
+      result.NetworkMode = (result.NetworkMode == 255) ? 0 : res.result.NetworkMode
+
       console.log('getNetworkSettings', result)
       return result
     })
@@ -70,7 +73,7 @@ export default class LinkZone {
       jsonrpc:"2.0",
       method:"SetNetworkSettings",
       params: {
-        NetworkMode: networkMode.value,
+        NetworkMode: +networkMode,
         NetselectionMode: 0
       },
       id:"4.7"
@@ -90,7 +93,16 @@ export default class LinkZone {
     }
 
     return this.linkZoneRequest(data).then(res => {
-      return res
+      // if(res.error)
+      //   return newError(res.error.message, "500")
+      
+      return this.sleep(5000).then(r => {
+        console.log('finish connect', res)
+        return res
+      })
+
+    }, err => {
+      console.log('error connect', err)
     });
   }
 
@@ -101,8 +113,28 @@ export default class LinkZone {
       method:"DisConnect",
       id:"3.2"
     }
+
     return this.linkZoneRequest(data).then(res => {
-      return res
+      return this.sleep(5000).then(r => {
+        console.log('finish disconnect', res)
+        return res
+      })
+    })
+  }
+
+  getConnectionState(){
+
+    const data = {
+      jsonrpc:"2.0",
+      method:"GetConnectionState",
+      id:"3.1"
+    }
+    return this.linkZoneRequest(data).then(res => {
+      const state = {
+        ConnectionStatus: res?.result.ConnectionStatus
+      }
+      console.log('getConnectionState', state)
+      return state
     });
   }
 
@@ -122,16 +154,24 @@ export default class LinkZone {
     });
   }
 
-  setNetwork(networkMode, connectStatus=0) {
-    return this.disconnect().then(res => {
-      this.setNetworkSettings(networkMode).then(res => {
-          this.connect().then(res => {
-            console.log('setNetwork', networkMode)
+  async setNetwork(networkMode) {
+    
+    return this.getConnectionState().then(res => {
+      if(res.ConnectionStatus == 2){ // si esta conectado
+        return this.disconnect().then(res => {
+          this.setNetworkSettings(networkMode).then(res => {
+              this.connect().then(res => {
+                console.log('finish setNetwork')
+              })
           })
-      })
+        });
+      }
+      return this.setNetworkSettings(networkMode).then(res => {
+        console.log('finish setNetwork')
+      });
     })
   }
-
+  
   async getUSSDSendResult() {
 
     const data = {
