@@ -165,22 +165,6 @@ export default class LinkZone {
     });
   }
 
-  sendUSSD(code){
-    const data = {
-      jsonrpc: "2.0",
-      method: "SendUSSD",
-      params: {
-        UssdContent: code,
-        UssdType: 1
-      },
-      id: "8.1"
-    }
-    return this.linkZoneRequest(data).then(res => {
-      console.log('sendUSSD', res)
-      return res;
-    });
-  }
-
   async setNetwork(networkMode) {
     
     return this.getConnectionState().then(res => {
@@ -198,39 +182,65 @@ export default class LinkZone {
       });
     })
   }
-  
-  async getUSSDSendResult() {
+
+  sendUSSD(code, ussdType){
+    const data = {
+      jsonrpc: "2.0",
+      method: "SendUSSD",
+      params: {
+        UssdContent: code,
+        UssdType: +ussdType
+      },
+      id: "8.1"
+    }
+    return this.linkZoneRequest(data).then(res => {
+      console.log('sendUSSD', res)
+      return res;
+    });
+  }
+
+  setUSSDEnd(code, ussdType){
+    const data = {
+      jsonrpc: "2.0",
+      method: "SetUSSDEnd",
+      id: "8.3"
+    }
+    return this.linkZoneRequest(data).then(res => {
+      console.log('sendUSSD', res)
+      return res;
+    });
+  }
+
+  getUSSDSendResult() {
 
     const data = {
       jsonrpc: "2.0",
       method: "GetUSSDSendResult",
       id: "8.2"
     }
+
     return this.linkZoneRequest(data).then(res => {
-      return res.result.UssdContent
+      const result = {
+        "UssdType": res.result.UssdType,
+        "SendState": res.result.SendState,
+        "UssdContent": res.result.UssdContent
+      }
+      console.log('getUSSDSendResult', result)
+      return result
     })
-    // if (!res.ok)
-    //   return null
-
-    // if (res.result['SendState'] === 1)
-    //   return await this.getUSSDSendResult()
-
-    // if (res.result['SendState'] === 2)
-    //   return res.result['UssdContent']
-
-    // return null
   }
 
-  sendUssdCode(code) {
+  sendUssdCode(code, ussdType) {
     
-    console.log(code)
+    console.log('sendUssdCode', code, ussdType)
 
-    return this.sendUSSD(code).then(res => {
-      return this.getUSSDSendResult().then(res => {
-        console.log('sendUssdCode', res)
-        return res
+    return this.sendUSSD(code, ussdType).then(res => {
+      return this.sleep(5000).then(res => {
+        return this.getUSSDSendResult().then(res => {
+          console.log('sendUssdCode', res)
+          return res
+        })
       })
     })
-    
   }
 }

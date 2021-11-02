@@ -5,13 +5,18 @@ export default function ConectionCard({ linkZoneController }) {
   const ussd = useRef()
   const [responseDetails, setResponseDetails] = useState("")
   const [loading, setLoading] = useState(false)
+  const [ussdType, setUssdType] = useState(1)
 
   async function handleUSSD () {
 
     setLoading(true)
-    const res = await linkZoneController.sendUssdCode(ussd.current.value)
-    // const res = await linkZoneController.getUSSDSendResult()
-    setResponseDetails(res)
+    const res = await linkZoneController.sendUssdCode(ussd.current.value, ussdType)
+    if(res.SendState == 2)
+      setResponseDetails(res.UssdContent)
+    else
+      setResponseDetails("Ha ocurrido un error, intente otra vez.")
+    
+    setUssdType(res.UssdType)
     setLoading(false)
   }
 
