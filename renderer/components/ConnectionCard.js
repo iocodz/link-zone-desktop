@@ -10,6 +10,7 @@ export default function ConnectionCard({
   const [systemStatus, setSystemStatus] = useState({})
   const [networkData, setSetNetworkData] = useState({})
   const [runningCronJob, setRunningCronJob] = useState(true)
+  const [loadingNetwork, setLoadingNetwork] = useState(false)
   // const [networkType, setNetworkType] = useState("")
   const network = useRef()
 
@@ -59,21 +60,22 @@ export default function ConnectionCard({
   }, []);
 
   function handleNetworkType() {
+    setLoadingNetwork(true)
     linkZoneController.setNetwork(network.current.value).then(res => {
       cronJob()
-    });
+    })
+      .finally(() => setLoadingNetwork(false));
   }
 
   return (
     <div className="rounded-lg w-72 p-4 bg-white shadow-lg dark:bg-gray-800 max-w-xs m-5">
       <p className="text-2xl leading-normal justify-center font-bold text-black dark:text-white pt-4">
-        Conexión
         <div
           className="
             relative
             inline-block
             w-10
-            ml-2
+            mr-2
             mb-1
             align-middle
             select-none
@@ -115,6 +117,7 @@ export default function ConnectionCard({
             "
           > </label>
         </div>
+        { (systemStatus?.Connected) ? "Conectado" : "Desconectado" }
       </p>
 
       <ul>
@@ -129,7 +132,7 @@ export default function ConnectionCard({
               <path d="M3.707 2.293a1 1 0 00-1.414 1.414l6.921 6.922c.05.062.105.118.168.167l6.91 6.911a1 1 0 001.415-1.414l-.675-.675a9.001 9.001 0 00-.668-11.982A1 1 0 1014.95 5.05a7.002 7.002 0 01.657 9.143l-1.435-1.435a5.002 5.002 0 00-.636-6.294A1 1 0 0012.12 7.88c.924.923 1.12 2.3.587 3.415l-1.992-1.992a.922.922 0 00-.018-.018l-6.99-6.991zM3.238 8.187a1 1 0 00-1.933-.516c-.8 3-.025 6.336 2.331 8.693a1 1 0 001.414-1.415 6.997 6.997 0 01-1.812-6.762zM7.4 11.5a1 1 0 10-1.73 1c.214.371.48.72.795 1.035a1 1 0 001.414-1.414c-.191-.191-.35-.4-.478-.622z" />
             </svg>
           </span>
-          <span>{ (systemStatus?.Connected) ? systemStatus?.NetworkName : "Desconectado" }</span>
+          <span>{ (systemStatus?.Connected) ? systemStatus?.NetworkName : "Sin Red" }</span>
         </li>
         <li
           className="text-xs font-inter leading-normal flex items-center font-medium text-black dark:text-white py-4 border-t border-gray-300">
@@ -165,9 +168,10 @@ export default function ConnectionCard({
               className="form-select rounded-md border border-gray-300 outline-none block w-full mt-1 p-2 focus:outline-none focus:ring"
               onChange={() => handleNetworkType()}
               ref={network}
-              value={networkData?.NetworkMode}
+              defaultValue={networkData?.NetworkMode}
+              disabled={loadingNetwork}
             >
-              <option selected disabled value="">Selecciona modo de red</option>
+              <option disabled value="">Selecciona modo de red</option>
               <option value="0">Modo red: Auto</option>
               <option value="1">Modo red: 2G</option>
               <option value="2">Modo red: 3G</option>

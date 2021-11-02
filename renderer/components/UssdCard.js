@@ -6,6 +6,7 @@ export default function ConectionCard({ linkZoneController }) {
   const [responseDetails, setResponseDetails] = useState("")
   const [loading, setLoading] = useState(false)
   const [ussdType, setUssdType] = useState(1)
+  const [loadingCancell, setLoadingCancell] = useState(false)
 
   async function handleUSSD () {
 
@@ -18,6 +19,13 @@ export default function ConectionCard({ linkZoneController }) {
     
     setUssdType(res.UssdType)
     setLoading(false)
+  }
+
+  async function cancelUSSD() {
+    setLoadingCancell(true)
+    const res = await linkZoneController.setUSSDEnd()
+    setLoadingCancell(false)
+    setResponseDetails("")
   }
 
   return (
@@ -39,13 +47,22 @@ export default function ConectionCard({ linkZoneController }) {
              className="mt-4 rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
              name="email" placeholder="Ingrese el código USSD"
              ref={ussd}/>
-            <button type="button"
-              className={(loading ? "animate-pulse" : "") + " py-2 px-4 mt-5 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "}
-              onClick={() => handleUSSD()}
-              disabled={loading}
-            >
-              Enviar
-            </button>
+            <div className="flex w-full">
+              <button type="button"
+                      className={(loading ? "animate-pulse" : "") + " py-2 px-4 mt-5 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "}
+                      onClick={() => handleUSSD()}
+                      disabled={loadingCancell || loading}
+              >
+                Enviar
+              </button>
+              <button type="button"
+                      className={(loadingCancell ? "animate-pulse" : "") + "ml-1 py-2 px-4 mt-5 bg-red-600 hover:bg-red-700 focus:ring-red-500 focus:ring-offset-red-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "}
+                      onClick={() => cancelUSSD()}
+                      disabled={loadingCancell || loading}
+              >
+                Cancelar
+              </button>
+            </div>
           </div>
         </li>
       </ul>
