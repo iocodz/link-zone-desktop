@@ -1,5 +1,5 @@
 export default class LinkZone {
-  proxyURL = "/api";
+  proxyURL = "http://localhost:8888/api";
   NETWORKS_TYPES = ['NO_SERVICE', '2G', '2G', '3G', '3G', '3G', '3G+', '3G+', '4G', '4G+']
   
   constructor() { }
