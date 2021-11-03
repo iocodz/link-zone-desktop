@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useRef} from "react";
+import Spinner from "./Spinner";
 
 export default function ConnectionCard({
   data,
@@ -15,16 +16,18 @@ export default function ConnectionCard({
   const network = useRef()
 
   function handleToggleConnection () {
-    
-    setToggleEnabled(false)
-    console.log('togle', toggleConnection)
+    setLoadingNetwork(true)
     if (!toggleConnection)
       linkZoneController.connect().then(data => {
         cronJob()
+        setToggleConnection(true)
+        setLoadingNetwork(false)
       })
     else
       linkZoneController.disconnect().then(data => {
         cronJob()
+        setToggleConnection(false)
+        setLoadingNetwork(false)
       })
   }
 
@@ -40,14 +43,6 @@ export default function ConnectionCard({
         setToggleConnection(data?.Connected)
       })
     })
-  }
-
-  function stopCronJob () {
-    setRunningCronJob(false)
-  }
-
-  function startCronJob () {
-    setRunningCronJob(true)
   }
 
   useEffect(() => {
@@ -69,14 +64,13 @@ export default function ConnectionCard({
 
   return (
     <div className="rounded-lg w-72 p-4 bg-white shadow-lg dark:bg-gray-800 max-w-xs m-5">
-      <p className="text-2xl leading-normal justify-center font-bold text-black dark:text-white pt-4">
+      <p className="text-2xl leading-normal flex items-center font-bold text-black dark:text-white pt-4">
         <div
           className="
             relative
             inline-block
             w-10
-            mr-2
-            mb-1
+            mr-3
             align-middle
             select-none
             transition
@@ -88,7 +82,7 @@ export default function ConnectionCard({
             type="checkbox"
             name="toggle"
             id="toggle"
-            disabled={!toggleEnabled}
+            disabled={loadingNetwork}
             checked={toggleConnection}
             onChange={() => handleToggleConnection()}
             className="
@@ -118,6 +112,7 @@ export default function ConnectionCard({
           > </label>
         </div>
         { (systemStatus?.Connected) ? "Conectado" : "Desconectado" }
+        { loadingNetwork && <Spinner />}
       </p>
 
       <ul>
