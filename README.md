@@ -13,7 +13,7 @@ $ yarn create nextron-app my-app --example with-javascript-tailwindcss
 $ pnpx create-nextron-app my-app --example with-javascript-tailwindcss
 ```
 
-### Install Dependencies
+### Install Dependencies 
 
 ```
 $ cd my-app
