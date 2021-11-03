@@ -9,7 +9,7 @@ export default function ConectionCard({ linkZoneController }) {
   const [loadingCancell, setLoadingCancell] = useState(false)
 
   function onChangeUssdValue() {
-    console.log('onchangeussd', event.target.value)
+    // console.log('onchangeussd', event.target.value)
     setUssdValue(event.target.value)
   }
 
@@ -23,8 +23,9 @@ export default function ConectionCard({ linkZoneController }) {
     else
       setResponseDetails("Ha ocurrido un error, intente otra vez.")
     
-    setUssdType(res.UssdType)
+    setUssdValue("")
     setLoading(false)
+    setUssdType(res.UssdType)
   }
 
   async function cancelUSSD() {
