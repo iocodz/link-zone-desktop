@@ -1,6 +1,6 @@
 export default function Spinner () {
   return (
-    <svg width="20" className="ml-3" height="20" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="rgb(79, 70, 229)">
+    <svg width="20" className="ml-3 mb-2" height="20" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="rgb(79, 70, 229)">
       <g fill="none" fillRule="evenodd">
         <g transform="translate(1 1)" strokeWidth="2">
           <circle strokeOpacity=".5" cx="18" cy="18" r="18"/>

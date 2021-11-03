@@ -69,9 +69,10 @@ export default function ConnectionCard({
 
   return (
     <div className="rounded-lg w-72 p-4 bg-white shadow-lg dark:bg-gray-800 max-w-xs m-5">
-      <p className="text-2xl leading-normal flex items-center font-bold text-black dark:text-white pt-4">
-        <div
-          className="
+      <p className="text-2xl leading-normal flex items-center justify-between font-bold text-black dark:text-white pt-4">
+        <div className="mb-2">
+          <div
+            className="
             relative
             inline-block
             w-10
@@ -83,14 +84,14 @@ export default function ConnectionCard({
             ease-in
           "
           >
-          <input
-            type="checkbox"
-            name="toggle"
-            id="toggle"
-            disabled={loadingNetwork}
-            checked={toggleConnection}
-            onChange={() => handleToggleConnection()}
-            className="
+            <input
+              type="checkbox"
+              name="toggle"
+              id="toggle"
+              disabled={loadingNetwork}
+              checked={toggleConnection}
+              onChange={() => handleToggleConnection()}
+              className="
               toggle-checkbox
               absolute
               block
@@ -102,10 +103,10 @@ export default function ConnectionCard({
               appearance-none
               cursor-pointer
             "
-          />
-          <label
-            htmlFor="toggle"
-            className="
+            />
+            <label
+              htmlFor="toggle"
+              className="
               toggle-label
               block
               overflow-hidden
@@ -114,9 +115,10 @@ export default function ConnectionCard({
               bg-gray-300
               cursor-pointer
             "
-          > </label>
+            > </label>
+          </div>
+          { (networkData?.NetworkStatus) ? ((systemStatus?.Connected) ? "Conectado" : "Desconectado") : "No WiFi" }
         </div>
-        { (networkData?.NetworkStatus) ? ((systemStatus?.Connected) ? "Conectado" : "Desconectado") : "No WiFi" }
         { loadingNetwork && <Spinner />}
       </p>
 
