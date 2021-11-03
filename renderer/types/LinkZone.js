@@ -56,7 +56,7 @@ export default class LinkZone {
 
     return this.linkZoneRequest(data).then(res => {
       let hasNetwork = true
-      if(res?.code == "EHOSTUNREACH")
+      if(res?.code == "EHOSTUNREACH" || res?.code == "EACCES")
         hasNetwork = false
         
       let result = {
