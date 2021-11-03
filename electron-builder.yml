@@ -1,6 +1,6 @@
-appId: com.example.nextron
+appId: com.linkzone.manager
 productName: Link Zone Manager
-copyright: Copyright © 2020
+copyright: Copyright © 2021
 directories:
   output: dist
   buildResources: resources
@@ -9,4 +9,10 @@ files:
     filter:
       - package.json
       - app
-publish: null
+
+win:
+  target:
+    - nsis
+
+publish:
+  provider: github
