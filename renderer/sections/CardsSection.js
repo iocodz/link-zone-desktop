@@ -18,7 +18,7 @@ export default function CardsSection() {
         {/* <NetworkCard linkZoneController={linkZone} /> */}
         <UssdCard linkZoneController={linkZone} />
       </div>
-      <h2 className="mt-2 text-center w-full text-gray-800">Considera hacernos una donación mediante 💰 <a onClick={() => require('electron').shell.openExternal("https://qvapay.com/payme/linkzone")} className="cursor-pointer font-bold underline text-blue-600">QvaPay</a></h2>
+      <h2 className="mt-2 text-center w-full text-gray-800">Considera hacer una <a onClick={() => require('electron').shell.openExternal("https://qvapay.com/payme/linkzone")} className="cursor-pointer font-bold underline text-blue-600">donación 💰</a> </h2>
     </div>
   )
 }
