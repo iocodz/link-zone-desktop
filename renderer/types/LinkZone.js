@@ -55,12 +55,18 @@ export default class LinkZone {
     }
 
     return this.linkZoneRequest(data).then(res => {
+      let hasNetwork = true
+      if(res?.code == "EHOSTUNREACH" || res?.code == "EACCES")
+        hasNetwork = false
+        
       let result = {
         "NetworkMode": res?.result?.NetworkMode,
-        "NetSelectionMode": res?.result?.NetselectionMode
+        "NetSelectionMode": res?.result?.NetselectionMode,
+        "NetworkStatus": hasNetwork
       }
-
-      result.NetworkMode = (result.NetworkMode == 255) ? 0 : res.result.NetworkMode
+      
+      if(result.NetworkMode != null)
+        result.NetworkMode = (result.NetworkMode == 255) ? 0 : res.result.NetworkMode
 
       console.log('getNetworkSettings', result)
       return result
@@ -158,7 +164,7 @@ export default class LinkZone {
     }
     return this.linkZoneRequest(data).then(res => {
       const state = {
-        ConnectionStatus: res?.result.ConnectionStatus
+        ConnectionStatus: res?.result?.ConnectionStatus
       }
       console.log('getConnectionState', state)
       return state
@@ -206,7 +212,7 @@ export default class LinkZone {
       id: "8.3"
     }
     return this.linkZoneRequest(data).then(res => {
-      console.log('sendUSSD', res)
+      console.log('setUSSDEnd', res)
       return res;
     });
   }
@@ -221,9 +227,9 @@ export default class LinkZone {
 
     return this.linkZoneRequest(data).then(res => {
       const result = {
-        "UssdType": res.result.UssdType,
-        "SendState": res.result.SendState,
-        "UssdContent": res.result.UssdContent
+        "UssdType": res?.result?.UssdType,
+        "SendState": res?.result?.SendState,
+        "UssdContent": res?.result?.UssdContent
       }
       console.log('getUSSDSendResult', result)
       return result
@@ -232,8 +238,6 @@ export default class LinkZone {
 
   sendUssdCode(code, ussdType) {
     
-    console.log('sendUssdCode', code, ussdType)
-
     return this.sendUSSD(code, ussdType).then(res => {
       return this.sleep(5000).then(res => {
         return this.getUSSDSendResult().then(res => {
