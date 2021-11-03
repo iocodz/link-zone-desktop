@@ -1,4 +1,5 @@
 import React, {useRef, useState} from "react";
+import Spinner from "./Spinner";
 
 export default function ConectionCard({ linkZoneController }) {
 
@@ -6,7 +7,7 @@ export default function ConectionCard({ linkZoneController }) {
   const [responseDetails, setResponseDetails] = useState("")
   const [loading, setLoading] = useState(false)
   const [ussdType, setUssdType] = useState(1)
-  const [loadingCancell, setLoadingCancell] = useState(false)
+  const [loadingCancel, setloadingCancel] = useState(false)
 
   function onChangeUssdValue() {
     // console.log('onchangeussd', event.target.value)
@@ -29,17 +30,18 @@ export default function ConectionCard({ linkZoneController }) {
   }
 
   async function cancelUSSD() {
-    setLoadingCancell(true)
+    setloadingCancel(true)
     const res = await linkZoneController.setUSSDEnd()
-    setLoadingCancell(false)
+    setloadingCancel(false)
     setResponseDetails("")
     setUssdValue("")
   }
 
   return (
     <div className="rounded-lg w-72 p-4 bg-white shadow-lg dark:bg-gray-800 max-w-xs m-5">
-      <p className="text-2xl leading-normal  font-bold text-black dark:text-white pt-4">
+      <p className="text-2xl leading-normal flex items-center justify-between font-bold text-black dark:text-white pt-4">
         USSD
+        { (loading || loadingCancel ) && <Spinner />}
       </p>
       <ul>
         <li
@@ -61,14 +63,14 @@ export default function ConectionCard({ linkZoneController }) {
               <button type="button"
                       className={(loading ? "animate-pulse" : "") + " py-2 px-4 mt-5 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "}
                       onClick={() => handleUSSD()}
-                      disabled={loadingCancell || loading}
+                      disabled={loadingCancel || loading}
               >
                 Enviar
               </button>
               <button type="button"
-                      className={(loadingCancell ? "animate-pulse" : "") + "ml-1 py-2 px-4 mt-5 bg-red-600 hover:bg-red-700 focus:ring-red-500 focus:ring-offset-red-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "}
+                      className={(loadingCancel ? "animate-pulse" : "") + "ml-1 py-2 px-4 mt-5 bg-red-600 hover:bg-red-700 focus:ring-red-500 focus:ring-offset-red-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "}
                       onClick={() => cancelUSSD()}
-                      disabled={loadingCancell || loading}
+                      disabled={loadingCancel || loading}
               >
                 Cancelar
               </button>

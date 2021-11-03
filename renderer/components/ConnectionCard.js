@@ -34,12 +34,13 @@ export default function ConnectionCard({
   }
 
   function cronJob () {
-
+    setLoadingNetwork(true)
     linkZoneController.getNetworkSettings().then(netData => {
       linkZoneController.getSystemStatus().then(data => {
         if(data === systemStatus)
           return
 
+        setLoadingNetwork(false)
         setSystemStatus(data)
         setSetNetworkData(netData)
         setToggleConnection(data?.Connected)
@@ -64,7 +65,7 @@ export default function ConnectionCard({
     linkZoneController.setNetwork(network.current.value).then(res => {
       cronJob()
     })
-      .finally(() => setLoadingNetwork(false));
+      // .finally();
   }
 
   return (
