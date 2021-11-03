@@ -2,16 +2,22 @@ import React, {useRef, useState} from "react";
 
 export default function ConectionCard({ linkZoneController }) {
 
-  const ussd = useRef()
+  const [ussdValue, setUssdValue] = useState("")
   const [responseDetails, setResponseDetails] = useState("")
   const [loading, setLoading] = useState(false)
   const [ussdType, setUssdType] = useState(1)
   const [loadingCancell, setLoadingCancell] = useState(false)
 
+  function onChangeUssdValue() {
+    console.log('onchangeussd', event.target.value)
+    setUssdValue(event.target.value)
+  }
+
+
   async function handleUSSD () {
 
     setLoading(true)
-    const res = await linkZoneController.sendUssdCode(ussd.current.value, ussdType)
+    const res = await linkZoneController.sendUssdCode(ussdValue, ussdType)
     if(res.SendState == 2)
       setResponseDetails(res.UssdContent)
     else
@@ -26,6 +32,7 @@ export default function ConectionCard({ linkZoneController }) {
     const res = await linkZoneController.setUSSDEnd()
     setLoadingCancell(false)
     setResponseDetails("")
+    setUssdValue("")
   }
 
   return (
@@ -46,7 +53,9 @@ export default function ConectionCard({ linkZoneController }) {
             <input type="text" id="required-email"
              className="mt-4 rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
              name="email" placeholder="Ingrese el código USSD"
-             ref={ussd}/>
+             value={ussdValue}
+             onChange={() => onChangeUssdValue()}
+             />
             <div className="flex w-full">
               <button type="button"
                       className={(loading ? "animate-pulse" : "") + " py-2 px-4 mt-5 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "}
