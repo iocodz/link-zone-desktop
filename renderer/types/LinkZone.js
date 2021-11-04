@@ -11,6 +11,7 @@ export default class LinkZone {
   linkZoneRequest(payload) {
 
     return fetch(this.proxyURL, {
+      // mode: "no-cors",
       method: 'POST',
       body: JSON.stringify(payload)
     })
@@ -56,7 +57,7 @@ export default class LinkZone {
 
     return this.linkZoneRequest(data).then(res => {
       let hasNetwork = true
-      if(res?.code == "EHOSTUNREACH" || res?.code == "EACCES")
+      if(res?.result == null || res?.code == "EHOSTUNREACH" || res?.code == "EACCES")
         hasNetwork = false
         
       let result = {
