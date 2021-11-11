@@ -2,7 +2,7 @@
 
 ## Link Zone Manager
 
-App de escritorio para manejar fácilmente tu Link Zone de Etecsa.
+App de escritorio para manejar fácilmente tu Link Zone de la infame Etecsa.
 
 ![image info](./assets/home.png)
 
