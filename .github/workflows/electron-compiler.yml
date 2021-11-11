@@ -30,7 +30,7 @@ jobs:
           yarn install
       - name: Publish
         run: |
-          yarn run build
+          yarn build
       - name: Cleanup artifacts
         run: |
           npx rimraf "dist/!(*.exe|*.deb|*.AppImage|*.dmg)"
