@@ -2,7 +2,7 @@
   "private": true,
   "name": "link-zone-desktop",
   "description": "App de escritorio para manejar fácilmente tu Link Zone de la infame Etecsa.",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "author": "@raulcr98 @pedris11s",
   "main": "app/background.js",
   "scripts": {
