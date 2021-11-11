@@ -1,9 +1,9 @@
 {
   "private": true,
-  "name": "my-nextron-app",
-  "description": "My application description",
-  "version": "0.1.1",
-  "author": "Yoshihide Shiono <shiono.yoshihide@gmail.com>",
+  "name": "link-zone-desktop",
+  "description": "App de escritorio para manejar fácilmente tu Link Zone de la infame Etecsa.",
+  "version": "0.1.2",
+  "author": "@raulcr98 @pedris11s",
   "main": "app/background.js",
   "scripts": {
     "dev": "nextron",
