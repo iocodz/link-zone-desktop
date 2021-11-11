@@ -1,5 +1,5 @@
 export default class LinkZone {
-  proxyURL = "http://localhost:8888/api";
+  proxyURL = "http://192.168.1.1/jrd/webapi";
   NETWORKS_TYPES = ['NO_SERVICE', '2G', '2G', '3G', '3G', '3G', '3G+', '3G+', '4G', '4G+']
   
   constructor() { }
@@ -11,6 +11,7 @@ export default class LinkZone {
   linkZoneRequest(payload) {
 
     return fetch(this.proxyURL, {
+      // mode: "no-cors",
       method: 'POST',
       body: JSON.stringify(payload)
     })
@@ -56,7 +57,7 @@ export default class LinkZone {
 
     return this.linkZoneRequest(data).then(res => {
       let hasNetwork = true
-      if(res?.code == "EHOSTUNREACH" || res?.code == "EACCES")
+      if(res?.result == null || res?.code == "EHOSTUNREACH" || res?.code == "EACCES")
         hasNetwork = false
         
       let result = {
