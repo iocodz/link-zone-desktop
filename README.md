@@ -9,19 +9,6 @@ App de escritorio para manejar fácilmente tu Link Zone de Etecsa.
 
 ## Usage
 
-### Create an App
-
-```
-# with npx
-$ npx create-nextron-app my-app --example with-javascript-tailwindcss
-
-# with yarn
-$ yarn create nextron-app my-app --example with-javascript-tailwindcss
-
-# with pnpx
-$ pnpx create-nextron-app my-app --example with-javascript-tailwindcss
-```
-
 ### Install Dependencies 
 
 ```
