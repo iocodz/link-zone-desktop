@@ -29,6 +29,13 @@ jobs:
         run: |
           yarn install
       - name: Publish
+        if: matrix.os != 'windows-latest'
+        run: |
+          yarn build:linux
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish win
+        if: matrix.os == 'windows-latest'
         run: |
           yarn build
         env:
