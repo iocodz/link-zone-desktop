@@ -70,7 +70,7 @@ export default function ConnectionCard({
 
   return (
     <div className="rounded-lg w-72 p-4 bg-white shadow-lg dark:bg-gray-800 max-w-xs m-5">
-      <p className="text-2xl leading-normal flex items-center justify-between font-bold text-black dark:text-white pt-4">
+      <div className="text-2xl leading-normal flex items-center justify-between font-bold text-black dark:text-white pt-4">
         <div className="mb-2">
           <div
             className="
@@ -121,7 +121,7 @@ export default function ConnectionCard({
           { (networkData?.NetworkStatus) ? ((systemStatus?.Connected) ? "Conectado" : "Desconectado") : "No WiFi" }
         </div>
         { loadingNetwork && <Spinner />}
-      </p>
+      </div>
 
       <ul>
         <li

@@ -10,7 +10,6 @@ export default class LinkZone {
 
   setLinkZoneUrl(url){
     this.proxyURL = getLinkZoneUrl(url);
-    console.log(this.proxyURL)
   }
 
   getLinkZoneUrl(){
