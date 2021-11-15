@@ -1,8 +1,21 @@
+import { getLinkZoneUrl, linkZoneApiUrl } from "../config";
+
 export default class LinkZone {
-  proxyURL = "http://192.168.1.1/jrd/webapi";
+  proxyURL;
   NETWORKS_TYPES = ['NO_SERVICE', '2G', '2G', '3G', '3G', '3G', '3G+', '3G+', '4G', '4G+']
   
-  constructor() { }
+  constructor(proxyURL = linkZoneApiUrl) {
+    this.proxyURL = proxyURL;
+   }
+
+  setLinkZoneUrl(url){
+    this.proxyURL = getLinkZoneUrl(url);
+    console.log(this.proxyURL)
+  }
+
+  getLinkZoneUrl(){
+    return this.proxyURL;
+  }
 
   sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
