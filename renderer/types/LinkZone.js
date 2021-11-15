@@ -1,10 +1,16 @@
-import { linkZoneApiUrl } from "../config";
+import { getLinkZoneUrl, linkZoneApiUrl } from "../config";
 
 export default class LinkZone {
-  proxyURL = linkZoneApiUrl;
+  proxyURL;
   NETWORKS_TYPES = ['NO_SERVICE', '2G', '2G', '3G', '3G', '3G', '3G+', '3G+', '4G', '4G+']
   
-  constructor() { }
+  constructor(proxyURL = linkZoneApiUrl) {
+    this.proxyURL = proxyURL;
+   }
+
+  setProxyUrl(url){
+    this.proxyURL = getLinkZoneUrl(url);
+  }
 
   sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
