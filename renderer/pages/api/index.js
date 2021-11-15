@@ -1,6 +1,6 @@
-const axios = require('axios');
+import { linkZoneApiUrl } from '../../config';
 
-const linkZoneApiUrl = "http://192.168.1.1/jrd/webapi";
+const axios = require('axios');
 
 export default async function linkZoneRequest(req, res) {
   if (req.method !== 'POST') {

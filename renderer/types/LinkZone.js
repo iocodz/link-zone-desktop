@@ -1,5 +1,7 @@
+import { linkZoneApiUrl } from "../config";
+
 export default class LinkZone {
-  proxyURL = "http://192.168.1.1/jrd/webapi";
+  proxyURL = linkZoneApiUrl;
   NETWORKS_TYPES = ['NO_SERVICE', '2G', '2G', '3G', '3G', '3G', '3G+', '3G+', '4G', '4G+']
   
   constructor() { }
