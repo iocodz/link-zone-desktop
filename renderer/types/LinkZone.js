@@ -8,8 +8,13 @@ export default class LinkZone {
     this.proxyURL = proxyURL;
    }
 
-  setProxyUrl(url){
+  setLinkZoneUrl(url){
     this.proxyURL = getLinkZoneUrl(url);
+    console.log(this.proxyURL)
+  }
+
+  getLinkZoneUrl(){
+    return this.proxyURL;
   }
 
   sleep = (milliseconds) => {
