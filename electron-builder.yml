@@ -14,33 +14,5 @@ win:
   target:
     - nsis
 
-dmg:
-  contents:
-    - x: 130
-      y: 220
-    - x: 410
-      y: 220
-      type: "link"
-      path: "/Applications"
-
-linux:
-  category: Development
-  target:
-    - "AppImage"
-    - "deb"
-    - "rpm"
-
-deb:
-  depends:
-    # --- Default START
-    - gconf2
-    - gconf-service
-    - libnotify4
-    - libappindicator1
-    - libxtst6
-    - libnss3
-    # --- Default END
-    - libsecret-1-0 # This is needed for keytar on linux
-
 publish:
   provider: github
