@@ -37,11 +37,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish Macos
-          if: matrix.os == 'macos-latest'
-          run: |
-            yarn build:mac
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: matrix.os == 'macos-latest'
+        run: |
+          yarn build:mac
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish Windows
         if: matrix.os == 'windows-latest'
         run: |
@@ -54,10 +54,10 @@ jobs:
           mkdir artifacts
           mv dist/*.AppImage artifacts
       - name: Cleanup artifacts Macos
-          if: matrix.os == 'macos-latest'
-          run: |
-            mkdir artifacts
-            mv dist/*.dmg artifacts
+        if: matrix.os == 'macos-latest'
+        run: |
+          mkdir artifacts
+          mv dist/*.dmg artifacts
       - name: Cleanup artifacts Windows
         if: matrix.os == 'windows-latest'
         run: |
