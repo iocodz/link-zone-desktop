@@ -11,7 +11,7 @@ files:
       - app
 
 mac:
-  icon: "app/images/logo.png"
+  icon: "resources/icon.icns"
 
 dmg:
   contents:
