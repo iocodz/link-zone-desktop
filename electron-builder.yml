@@ -10,6 +10,18 @@ files:
       - package.json
       - app
 
+mac:
+  icon: "app/images/logo.png"
+
+dmg:
+  contents:
+    - x: 130
+      y: 220
+    - x: 410
+      y: 220
+      type: "link"
+      path: "/Applications"
+
 win:
   target:
     - nsis
