@@ -9,6 +9,7 @@
     "dev": "nextron",
     "build": "nextron build",
     "build:linux": "nextron build --linux",
+    "build:mac": "nextron build --mac --x64",
     "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
