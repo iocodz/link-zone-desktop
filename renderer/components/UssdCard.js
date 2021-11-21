@@ -19,8 +19,10 @@ export default function ConectionCard({ linkZoneController }) {
 
     setLoading(true)
     const res = await linkZoneController.sendUssdCode(ussdValue, ussdType)
-    if(res.SendState == 2)
+    if(res.SendState === 2)
       setResponseDetails(res.UssdContent)
+    else if(res.SendState === 3)
+      setResponseDetails("Error, Intente cambiando Modo de Red a 3G en las configuraciones.")
     else
       setResponseDetails("Ha ocurrido un error, intente otra vez.")
     
