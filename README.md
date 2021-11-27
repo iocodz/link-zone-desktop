@@ -30,3 +30,13 @@ $ yarn dev (or `npm run dev` or `pnpm run dev`)
 # production build
 $ yarn build (or `npm run build` or `pnpm run build`)
 ```
+
+## Donations
+
+### ENZONA CUP
+
+![receive_code](https://user-images.githubusercontent.com/32805147/143617427-7db88afb-2397-44d4-b984-5166de34dc5a.png)
+
+### QVAPAY
+
+https://qvapay.com/payme/linkzone

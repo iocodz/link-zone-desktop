@@ -19,8 +19,10 @@ export default function ConectionCard({ linkZoneController }) {
 
     setLoading(true)
     const res = await linkZoneController.sendUssdCode(ussdValue, ussdType)
-    if(res.SendState == 2)
+    if(res.SendState === 2)
       setResponseDetails(res.UssdContent)
+    else if(res.SendState === 3)
+      setResponseDetails("Error, Intente cambiando Modo de Red a 3G en las configuraciones.")
     else
       setResponseDetails("Ha ocurrido un error, intente otra vez.")
     
@@ -68,7 +70,7 @@ export default function ConectionCard({ linkZoneController }) {
                 Enviar
               </button>
               <button type="button"
-                      className={(loadingCancel ? "animate-pulse" : "") + "ml-1 py-2 px-4 mt-5 bg-red-600 hover:bg-red-700 focus:ring-red-500 focus:ring-offset-red-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "}
+                      className={(loadingCancel ? "animate-pulse" : "") + "ml-1 py-2 px-4 mt-5 bg-transparent hover:bg-red-600 text-red-400 hover:text-white hover:border-red-600 border-red-400 border-2  focus:ring-red-500 focus:ring-offset-red-200 text-gray-800 border-red-200 w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "}
                       onClick={() => cancelUSSD()}
                       disabled={loadingCancel || loading}
               >

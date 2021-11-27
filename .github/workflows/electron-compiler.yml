@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-18.04]
+        os: [macos-latest, windows-latest, ubuntu-18.04]
 
     steps:
       - name: Context
@@ -30,33 +30,39 @@ jobs:
       - name: yarn install
         run: |
           yarn install
-      - name: Publish
-        if: matrix.os != 'windows-latest'
+      - name: Publish Linux
+        if: matrix.os == 'ubuntu-18.04'
         run: |
           yarn build:linux
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Publish win
+      - name: Publish Macos
+        if: matrix.os == 'macos-latest'
+        run: |
+          yarn build:mac
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish Windows
         if: matrix.os == 'windows-latest'
         run: |
           yarn build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Cleanup artifacts
-        if: matrix.os != 'windows-latest'
+      - name: Cleanup artifacts Linux
+        if: matrix.os == 'ubuntu-18.04'
         run: |
           mkdir artifacts
-          mv "dist/(*.exe,*.deb,*.AppImage,*.dmg)" artifacts || true
-      - name: Cleanup artifacts Win
+          mv dist/*.AppImage artifacts
+      - name: Cleanup artifacts Macos
+        if: matrix.os == 'macos-latest'
+        run: |
+          mkdir artifacts
+          mv dist/*.dmg artifacts
+      - name: Cleanup artifacts Windows
         if: matrix.os == 'windows-latest'
         run: |
           mkdir artifacts
           mv dist/*.exe artifacts
-#       - name: Cleanup artifacts
-#         run: |
-#           npx rimraf "dist/!(*.exe|*.deb|*.AppImage|*.dmg)"
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload artifacts
         uses: actions/upload-artifact@v1
         with:
