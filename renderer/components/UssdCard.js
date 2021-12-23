@@ -3,6 +3,7 @@ import Spinner from "./Spinner";
 
 export default function ConectionCard({ linkZoneController }) {
 
+  const [ussdSelectedValue, setUssdSelectedValue] = useState("")
   const [ussdValue, setUssdValue] = useState("")
   const [responseDetails, setResponseDetails] = useState("")
   const [loading, setLoading] = useState(false)
@@ -14,11 +15,16 @@ export default function ConectionCard({ linkZoneController }) {
     setUssdValue(event.target.value)
   }
 
+  function handleUssdSelect ( event ) {
+    setUssdSelectedValue( event.target.value )
+    setUssdValue( event.target.value )
+  }
 
   async function handleUSSD () {
-
     setLoading(true)
-    const res = await linkZoneController.sendUssdCode(ussdValue, ussdType)
+    setResponseDetails("")
+    const codeValue = ussdValue ? ussdValue : ussdSelectedValue
+    const res = await linkZoneController.sendUssdCode(codeValue, ussdType)
     if(res.SendState === 2)
       setResponseDetails(res.UssdContent)
     else if(res.SendState === 3)
@@ -46,6 +52,23 @@ export default function ConectionCard({ linkZoneController }) {
         { (loading || loadingCancel ) && <Spinner />}
       </p>
       <ul>
+        <li
+          className="text-xs font-inter leading-normal flex items-center font-medium text-black dark:text-white py-4 border-t border-gray-300">
+          <label className="block text-left w-full">
+            <select
+              className="form-select rounded-md border border-gray-300 outline-none block w-full mt-1 p-2 focus:outline-none focus:ring"
+              onChange={(e) => handleUssdSelect(e) }
+              value={ussdSelectedValue}
+              defaultValue=''
+              disabled={ loading || loadingCancel }
+            >
+              <option disabled value="">Seleccione una de las opciones</option>
+              { linkZoneController.UssdCodes.map( ({value, label}) => {
+                return <option value={value}>{label}</option>
+              } ) }
+            </select>
+          </label>
+        </li>
         <li
           className="text-xs font-inter leading-normal font-medium text-black dark:text-white py-4 border-t border-gray-300">
           <label className="text-gray-700" htmlFor="name">
