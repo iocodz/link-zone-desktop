@@ -28,7 +28,7 @@ export default function ConectionCard({ linkZoneController }) {
     if(res.SendState === 2)
       setResponseDetails(res.UssdContent)
     else if(res.SendState === 3)
-      setResponseDetails("Error, Intente cambiando Modo de Red a 3G en las configuraciones.")
+      setResponseDetails("Ha ocurrido un error, intente cambiando Modo de Red (3G o Auto) en las configuraciones.")
     else
       setResponseDetails("Ha ocurrido un error, intente otra vez.")
     
