@@ -3,6 +3,37 @@ import { getLinkZoneUrl, linkZoneApiUrl } from "../config";
 export default class LinkZone {
   proxyURL;
   NETWORKS_TYPES = ['NO_SERVICE', '2G', '2G', '3G', '3G', '3G', '3G+', '3G+', '4G', '4G+']
+
+  UssdCodes = [
+    {
+      "value": "*222#",
+      "label": "Consultar Saldo"
+    },
+    {
+      "value": "*133*5*1#",
+      "label": "Plan Combinado 600 MB + 800 MB - $110"
+    },
+    {
+      "value": "*133*5*2#",
+      "label": "Plan Combinado 1.5 GB + 2 GB - $250"
+    },
+    {
+      "value": "*133*5*3#",
+      "label": "Plan Combinado 3.5 GB + 4.5 GB - $500"
+    },
+    {
+      "value": "*133*1*4*1#",
+      "label": "Plan LTE 1 GB - $100"
+    },
+    {
+      "value": "*133*1*4*2#",
+      "label": "Plan LTE 2.5 GB - $200"
+    },
+    {
+      "value": "*133*1*4*3#",
+      "label": "Plan LTE 4 GB + 12 GB - $950"
+    },
+  ]
   
   constructor(proxyURL = linkZoneApiUrl) {
     this.proxyURL = proxyURL;
