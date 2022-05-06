@@ -155,7 +155,7 @@ export default function ConnectionCard({
           </svg>
           </span>
           {/* {(networkData?.NetworkStatus) ? (systemStatus?.BatCap + "%" + (systemStatus?.ChargeState) == 0) ? "(cargando)" : "" : "-"} */}
-          { (networkData?.NetworkStatus) ? systemStatus?.BatCap + "%" + (systemStatus?.ChargeState == 0 ? " (cargando)" : "") : "-"}
+          { (networkData?.NetworkStatus && systemStatus?.ChargeState != 3) ? systemStatus?.BatCap + "%" + (systemStatus?.ChargeState == 0 ? " (cargando)" : "") : "-"}
         </li>
         <li
           className="text-xs font-inter leading-normal flex items-center font-medium text-black dark:text-white py-4 border-t border-gray-300">
