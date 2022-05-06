@@ -291,4 +291,103 @@ export default class LinkZone {
       })
     })
   }
+
+  getSmsList(page = 0) {
+
+    const data = {
+      jsonrpc: "2.0",
+      method: "GetSMSContactList",
+      params: {
+        Page: page
+      },
+      id: "6.2"
+    }
+
+    return this.linkZoneRequest(data).then(res => {
+      const result = {
+        Page: res?.result?.Page,
+        TotalPageCount: res?.result?.TotalPageCount,
+        SmsList: []
+      }
+      
+      res?.result?.SMSContactList.forEach(element => {
+        let item = {
+          ContactId: element.ContactId,
+          PhoneNumber: element.PhoneNumber[0],
+          LastSmsPreview: element.SMSContent,
+          LastSmsDate: element.SMSTime,
+          UnreadCount: element.UnreadCount,
+          TotalCount: element.TSMSCount
+        }
+        
+        result.SmsList.push(item);
+      });
+
+      console.log('getSmsList', result)
+      return result
+    })
+  }
+
+  getSmsContentList(page, contactId) {
+
+    const data = {
+      jsonrpc: "2.0",
+      method: "GetSMSContentList",
+      params: {
+        Page: page,
+        ContactId: contactId
+      },
+      id: "6.3"
+    }
+
+    return this.linkZoneRequest(data).then(res => {
+      const result = {
+        Page: res?.result?.Page,
+        TotalPageCount: res?.result?.TotalPageCount,
+        PhoneNumber: res?.result?.PhoneNumber[0],
+        SmsList: []
+      }
+      
+      res?.result?.SMSContentList.forEach(element => {
+        let item = {
+          SmsContent: element.SMSContent,
+          SmdId: element.SMSId,
+          SmsDate: element.SMSTime
+        }
+        
+        result.SmsList.push(item);
+      });
+
+      console.log('getSmsContentList', result)
+      return result
+    })
+  }
+
+  deleteSms(smsId, contactId) {
+
+    const data = {
+      jsonrpc: "2.0",
+      method: "DeleteSMS",
+      params: {
+        DelFlag: 2,
+        ContactId: contactId,
+        SMSId: smsId
+      },
+      id: "6.5"
+    }
+
+    return this.linkZoneRequest(data).then(res => {
+      
+      const result = {
+        Success: true
+      }
+      
+      if(res?.error?.message != "")
+        result.Success = false;
+      
+
+      console.log('deleteSms', result)
+      return result
+    })
+  }
 }

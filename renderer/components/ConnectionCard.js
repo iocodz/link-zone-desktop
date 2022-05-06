@@ -18,6 +18,7 @@ export default function ConnectionCard({
   const network = useRef()
 
   function handleToggleConnection () {
+
     setLoadingNetwork(true)
     if (!toggleConnection)
       linkZoneController.connect().then(data => {
@@ -34,6 +35,10 @@ export default function ConnectionCard({
   }
 
   function cronJob () {
+    linkZoneController.getSmsList();
+    linkZoneController.getSmsContentList(0, 11);
+    linkZoneController.deleteSms(65572, 3);
+
     setLoadingNetwork(true)
     linkZoneController.getNetworkSettings().then(netData => {
       linkZoneController.getSystemStatus().then(data => {
