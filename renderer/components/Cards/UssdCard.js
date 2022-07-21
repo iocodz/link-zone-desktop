@@ -66,6 +66,7 @@ export default function ConectionCard({ linkZoneController }) {
           className="text-xs font-inter leading-normal font-medium text-black dark:text-white py-4 border-t border-gray-300">
           <label className="text-gray-700" htmlFor="name">
             <textarea
+              placeholder="La respuesta a su código USSD aparecerá aquí."
               className="flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
               id="comment" name="comment" rows="5" cols="40" disabled value={responseDetails}>
             </textarea>
