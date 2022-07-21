@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from "react";
+import Header from '../components/Header';
 import Loading from "../components/Loading";
 
 import '../styles/globals.css';
