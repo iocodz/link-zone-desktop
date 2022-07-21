@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from "react";
-import Spinner from "./Spinner";
+import Spinner from "../UI/Spinner";
 
 export default function ConnectionCard({
   data,

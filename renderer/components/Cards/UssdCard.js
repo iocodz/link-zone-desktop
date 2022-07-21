@@ -1,5 +1,5 @@
-import React, {useRef, useState} from "react";
-import Spinner from "./Spinner";
+import React, {useState} from "react";
+import Spinner from "../UI/Spinner";
 
 export default function ConectionCard({ linkZoneController }) {
 

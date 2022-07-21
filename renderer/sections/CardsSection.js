@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
-import ConnectionCard from "../components/ConnectionCard";
-import UssdCard from "../components/UssdCard";
+import React, {useEffect} from "react";
+import ConnectionCard from "../components/Cards/ConnectionCard";
+import UssdCard from "../components/Cards/UssdCard";
 
 export default function CardsSection({linkZone}) {
 

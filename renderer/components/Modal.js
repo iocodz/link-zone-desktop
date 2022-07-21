@@ -1,5 +1,4 @@
 import React from "react";
-import { DEFAULT_LINKZONE_URL } from "../config";
 
 export default function Modal({ open, onSave, onCancel, children }) {
 
