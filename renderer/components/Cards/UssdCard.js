@@ -1,39 +1,36 @@
 import React, { useState } from "react";
+import Autocomplete from "../Autocomplete";
 import Spinner from "../UI/Spinner";
+
+const USSD_AUTOCOMPLETE_PLACEHOLDER = 'Ingrese su código USSD';
+const DEFAULT_USSD = {value: '', label: USSD_AUTOCOMPLETE_PLACEHOLDER}
 
 export default function ConectionCard({ linkZoneController }) {
 
   const [ussdSelectedValue, setUssdSelectedValue] = useState("")
-  const [ussdValue, setUssdValue] = useState("")
+  const [ussdValue, setUssdValue] = useState(DEFAULT_USSD)
   const [responseDetails, setResponseDetails] = useState("")
   const [loading, setLoading] = useState(false)
   const [ussdType, setUssdType] = useState(1)
   const [loadingCancel, setloadingCancel] = useState(false)
+  
+  function onChangeUssdValue(newValue) {
 
-  function onChangeUssdValue() {
-    console.log('onchangeussd', event.target.value)
-    const newValue = event.target.value
-    if(!newValue || newValue[0] === '*')
-      return setUssdValue(newValue)
-
-    const mappedValue = linkZoneController.UssdCodes.filter(({value, label}) => label === newValue)
+    const mappedValue = linkZoneController.UssdCodes.filter(({value, label}) => value === newValue)
     
-    if(!mappedValue) return
-
-    console.log(mappedValue)
-
-    setUssdValue(mappedValue[0].value)
-  }
-
-  function handleUssdSelect(event) {
-    setUssdSelectedValue(event.target.value)
-    setUssdValue(event.target.value)
+    if(mappedValue.length === 0)
+      return setUssdValue({
+        value: newValue,
+        label: newValue ? 'Código USSD desconocido' : USSD_AUTOCOMPLETE_PLACEHOLDER
+      })
+    
+    setUssdValue(mappedValue[0])
   }
 
   async function handleUSSD() {
     setLoading(true)
     setResponseDetails("")
-    const codeValue = ussdValue ? ussdValue : ussdSelectedValue
+    const codeValue = ussdValue.value ? ussdValue.value : ussdSelectedValue
     const res = await linkZoneController.sendUssdCode(codeValue, ussdType)
     if (res.SendState === 2)
       setResponseDetails(res.UssdContent)
@@ -42,7 +39,7 @@ export default function ConectionCard({ linkZoneController }) {
     else
       setResponseDetails("Ha ocurrido un error, intente otra vez.")
 
-    setUssdValue("")
+    setUssdValue(DEFAULT_USSD)
     setLoading(false)
     setUssdType(res.UssdType)
   }
@@ -52,7 +49,7 @@ export default function ConectionCard({ linkZoneController }) {
     const res = await linkZoneController.setUSSDEnd()
     setloadingCancel(false)
     setResponseDetails("")
-    setUssdValue("")
+    setUssdValue(DEFAULT_USSD)
   }
 
   return (
@@ -72,27 +69,25 @@ export default function ConectionCard({ linkZoneController }) {
             </textarea>
           </label>
           <div className=" w-full">
-            <input type="text" id="required-email"
-              className="mt-4 rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-              name="email" placeholder="Ingrese el código USSD"
-              value={ussdValue}
-              onChange={() => onChangeUssdValue()}
-              list="ussdCodes"
+            <div className="mt-3"></div>
+            <Autocomplete options={linkZoneController.UssdCodes} 
+              value={ussdValue?.value || ""}
+              placeholder={USSD_AUTOCOMPLETE_PLACEHOLDER}
+              onChange={onChangeUssdValue}
             />
-            <datalist id="ussdCodes">
-              {linkZoneController.UssdCodes.map(({value, label}) => <option key={value}>{label}</option>)}
-              {linkZoneController.UssdCodes.map(({value, label}) => <option key={label}>{value}</option>)}
-            </datalist>
+            <p className="text-xs text-gray-500 mt-3">
+              {ussdValue?.label}
+            </p>
             <div className="flex w-full">
               <button type="button"
-                className={(loading ? "animate-pulse" : "") + " py-2 px-4 mt-5 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "}
+                className={(loading ? "animate-pulse" : "") + " py-2 px-4 mt-3 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "}
                 onClick={() => handleUSSD()}
                 disabled={loadingCancel || loading}
               >
-                Enviar
+                Ejecutar
               </button>
               <button type="button"
-                className={(loadingCancel ? "animate-pulse" : "") + "ml-1 py-2 px-4 mt-5 bg-transparent hover:bg-red-600 text-red-400 hover:text-white hover:border-red-600 border-red-400 border-2  focus:ring-red-500 focus:ring-offset-red-200 text-gray-800 border-red-200 w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "}
+                className={(loadingCancel ? "animate-pulse" : "") + "ml-1 py-2 px-4 mt-3 bg-transparent hover:bg-red-600 text-red-400 hover:text-white hover:border-red-600 border-red-400 border-2  focus:ring-red-500 focus:ring-offset-red-200 text-gray-800 border-red-200 w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "}
                 onClick={() => cancelUSSD()}
                 disabled={loadingCancel || loading}
               >
