@@ -51,7 +51,7 @@ export default function Autocomplete({options, value, onChange, placeholder}) {
 
     useEffect(() => {
         const listener = e => {
-            if(!ref.current.contains(e.target)) {
+            if(!ref?.current?.contains(e.target)) {
                 setShowOptions(false)
                 setCursor(-1)
             }
