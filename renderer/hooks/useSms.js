@@ -18,224 +18,6 @@ const def = {
   ]
 }
 
-const example = {
-  Page: 0,
-  TotalPageCount: 1,
-  PhoneNumber: "+5353600325",
-  SmsList: [
-    {
-      SmsId: 1,
-      SmsContent: "Hola como estas, esto es una prueba, gracias...",
-      SmsDate: "21-07-2021 10:00:00",
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    },
-    {
-      SmsId: 1,
-      SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
-    }
-  ]
-};
-
 export function useSms(linkZoneController) {
   const [sms, setSms] = useState(def)
   const [page, setPage] = useState(0)
@@ -244,10 +26,17 @@ export function useSms(linkZoneController) {
   async function getSms() {
     if(!contact) return;
     const data = await linkZoneController.getSmsContentList(page, contact);
-    setSms(data)
+    if(sms === def) setSms(data)
+    else {
+      const newData = data;
+      newData.SmsList.push(sms.SmsList)
+      setSms(newData)
+    }
   }
 
   async function changeContact(contactId) {
+    setPage(0)
+    setContact(null)
     setContact(contactId)
   }
 
