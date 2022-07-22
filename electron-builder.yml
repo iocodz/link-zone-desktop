@@ -27,7 +27,13 @@ win:
     - nsis
     
 linux:
-  target: AppImage
+  target:
+    - AppImage
+    - deb
+  maintainer: Reinier Hernández <sasuke.reinier@gmail.com>
+  icon: "resources/icon.png"
+  category: "Utility"
+
 
 publish:
   provider: github

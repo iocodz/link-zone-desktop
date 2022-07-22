@@ -18,6 +18,7 @@ export default function ConnectionCard({
   const network = useRef()
 
   function handleToggleConnection () {
+
     setLoadingNetwork(true)
     if (!toggleConnection)
       linkZoneController.connect().then(data => {
@@ -34,6 +35,10 @@ export default function ConnectionCard({
   }
 
   function cronJob () {
+    linkZoneController.getSmsList();
+    linkZoneController.getSmsContentList(0, 11);
+    linkZoneController.deleteSms(65572, 3);
+
     setLoadingNetwork(true)
     linkZoneController.getNetworkSettings().then(netData => {
       linkZoneController.getSystemStatus().then(data => {
@@ -70,7 +75,7 @@ export default function ConnectionCard({
 
   return (
     <div className="rounded-lg w-72 p-4 bg-white shadow-lg dark:bg-gray-800 max-w-xs m-5">
-      <p className="text-2xl leading-normal flex items-center justify-between font-bold text-black dark:text-white pt-4">
+      <div className="text-2xl leading-normal flex items-center justify-between font-bold text-black dark:text-white pt-4">
         <div className="mb-2">
           <div
             className="
@@ -121,7 +126,7 @@ export default function ConnectionCard({
           { (networkData?.NetworkStatus) ? ((systemStatus?.Connected) ? "Conectado" : "Desconectado") : "No WiFi" }
         </div>
         { loadingNetwork && <Spinner />}
-      </p>
+      </div>
 
       <ul>
         <li
@@ -150,7 +155,7 @@ export default function ConnectionCard({
           </svg>
           </span>
           {/* {(networkData?.NetworkStatus) ? (systemStatus?.BatCap + "%" + (systemStatus?.ChargeState) == 0) ? "(cargando)" : "" : "-"} */}
-          { (networkData?.NetworkStatus) ? systemStatus?.BatCap + "%" + (systemStatus?.ChargeState == 0 ? " (cargando)" : "") : "-"}
+          { (networkData?.NetworkStatus && systemStatus?.ChargeState != 3) ? systemStatus?.BatCap + "%" + (systemStatus?.ChargeState == 0 ? " (cargando)" : "") : "-"}
         </li>
         <li
           className="text-xs font-inter leading-normal flex items-center font-medium text-black dark:text-white py-4 border-t border-gray-300">
