@@ -352,7 +352,8 @@ export default class LinkZone {
         let item = {
           SmsContent: element.SMSContent,
           SmdId: element.SMSId,
-          SmsDate: element.SMSTime
+          SmsDate: element.SMSTime,
+          SMSType: element.SMSType
         }
         
         result.SmsList.push(item);
