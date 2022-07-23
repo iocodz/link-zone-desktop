@@ -36,6 +36,11 @@ export function useContact(linkZoneController) {
     setPage(page + 1)
   }
 
+  async function getUnread() {
+    const unreadMessages = contact.SmsList.reduce((acc, obj) => acc + obj.UnreadCount, 0)
+    return unreadMessages
+  }
+
   useEffect(async () => {
     getContact()
   }, []);
@@ -44,5 +49,5 @@ export function useContact(linkZoneController) {
     getContact()
   }, [page]);
 
-  return [contact, fetchContactNextPage];
+  return [contact, fetchContactNextPage, getUnread];
 }
