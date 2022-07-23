@@ -8,12 +8,12 @@ const def = {
     {
       SmsId: 1,
       SmsContent: "Selecciona un chat para empezar...",
-      SmsDate: new Date().toLocaleString(),
+      SmsDate: new Date().toISOString().replace("T", " ").substring(0, 19)
     },
     {
       SmsId: 1,
       SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toLocaleString(),
+      SmsDate: new Date().toISOString().replace("T", " ").substring(0, 19)
     }
   ]
 }

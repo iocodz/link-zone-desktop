@@ -20,6 +20,9 @@ export function useContact(linkZoneController) {
   const [page, setPage] = useState(0)
 
   async function getContact() {
+    
+    if (!linkZoneController) return;
+
     const data = await linkZoneController.getSmsList(page);
     if (contact.TotalPageCount) {
       const newContacts = data;

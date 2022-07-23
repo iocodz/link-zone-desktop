@@ -391,4 +391,60 @@ export default class LinkZone {
       return result
     })
   }
+
+  getSmsResult() {
+
+    const data = {
+      jsonrpc: "2.0",
+      method: "GetSendSMSResult",
+      id: "6.7"
+    }
+
+    return this.linkZoneRequest(data).then(res => {
+      const result = {
+        "SendStatus": res?.result?.SendStatus
+      }
+
+      // 5 ¡Error de envío del SMS!
+
+      console.log('getSmsResult', result)
+      return result
+    })
+  }
+
+  getSendSms(content, phoneNumber) {
+
+    let dateNow = new Date().toISOString().replace("T", " ").substring(0, 19);
+    
+    const data = {
+      jsonrpc: "2.0",
+      method: "SendSMS",
+      params: {
+        SMSId: -1,
+        SMSContent: content,
+        PhoneNumber: [
+          // " 5359329514"
+          phoneNumber
+        ],
+        SMSTime: dateNow
+      },
+      id: "6.6"
+    }
+
+    return this.linkZoneRequest(data).then(res => {
+      console.log('sendSms', res)
+      return res;
+    })
+  }
+
+  sendSms(content, phoneNumber) {
+    
+    return this.sendSms(content, phoneNumber).then(res => {
+      return this.sleep(5000).then(res => {
+        return this.getSmsResult().then(res => {
+          return res
+        })
+      })
+    })
+  }
 }
