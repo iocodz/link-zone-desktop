@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import LinkZone from "../types/LinkZone";
 
 const example = {
   Page: 0,
@@ -15,7 +16,8 @@ const example = {
   ]
 };
 
-export function useContact(linkZoneController) {
+export function useContact() {
+  const linkZoneController = new LinkZone()
   const [contact, setContact] = useState([])
   const [page, setPage] = useState(0)
 
@@ -32,7 +34,7 @@ export function useContact(linkZoneController) {
   }
 
   async function fetchContactNextPage() {
-    if (page + 1 === contact.TotalPageCount) return;
+    if (page + 1 >= contact.TotalPageCount) return;
     setPage(page + 1)
   }
 

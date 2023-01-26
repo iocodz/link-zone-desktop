@@ -23,13 +23,13 @@ export function useSms(linkZoneController) {
   const [page, setPage] = useState(0)
   const [contact, setContact] = useState(null)
 
-  async function getSms() {
+  async function getSms(changedContact = false) {
     if(!contact) return;
     const data = await linkZoneController.getSmsContentList(page, contact);
     if(sms === def) setSms(data)
     else {
-      const newData = data;
-      newData.SmsList.push(sms.SmsList)
+      let newData = data;
+      newData.SmsList = changedContact ? data.SmsList : [...sms.SmsList, ...data.SmsList];
       setSms(newData)
     }
   }
@@ -41,13 +41,18 @@ export function useSms(linkZoneController) {
   }
 
   async function fetchSmsNextPage() {
-    if (page + 1 === contact.TotalPageCount) return;
+    if (page + 1 >= sms.TotalPageCount) return;
     setPage(page + 1)
   }
 
   useEffect(() => {
     getSms()
-  }, [contact, page])
+  }, [page])
+
+  useEffect(() => {
+    setPage(0);
+    getSms(true);
+  }, [contact])
 
   return [sms, changeContact, fetchSmsNextPage];
 }
