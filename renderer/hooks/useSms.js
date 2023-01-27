@@ -25,11 +25,19 @@ export function useSms(linkZoneController) {
 
   async function getSms(changedContact = false) {
     if(!contact) return;
-    const data = await linkZoneController.getSmsContentList(page, contact);
-    if(sms === def) setSms(data)
+    let data = await linkZoneController.getSmsContentList(page, contact);
+    if(sms === def) {
+      data.SmsList = data.SmsList.sort((a, b) => {
+        return new Date(a.SmdId) - new Date(b.SmdId);
+      })
+      setSms(data)
+    }
     else {
       let newData = data;
       newData.SmsList = changedContact ? data.SmsList : [...sms.SmsList, ...data.SmsList];
+      newData.SmsList = newData.SmsList.sort((a, b) => {
+        return new Date(a.SmdId) - new Date(b.SmdId);
+      })
       setSms(newData)
     }
   }
