@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import LinkZone from "../types/LinkZone";
 
 const example = {
   Page: 0,
@@ -6,7 +7,7 @@ const example = {
   SmsList: [
     {
       ContactId: 1,
-      PhoneNumber: "+5353600325",
+      PhoneNumber: "+5353535353",
       LastSmsDate: "21-07-2021 10:00:00",
       LastSmsPreview: "Hola como estas, esto es una prueba, gracias...",
       TotalCount: 10,
@@ -15,7 +16,8 @@ const example = {
   ]
 };
 
-export function useContact(linkZoneController) {
+export function useContact() {
+  const linkZoneController = new LinkZone()
   const [contact, setContact] = useState([])
   const [page, setPage] = useState(0)
 
@@ -35,7 +37,7 @@ export function useContact(linkZoneController) {
   }
 
   async function fetchContactNextPage() {
-    if (page + 1 === contact.TotalPageCount) return;
+    if (page + 1 >= contact.TotalPageCount) return;
     setPage(page + 1)
   }
 
