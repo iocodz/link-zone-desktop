@@ -10,12 +10,19 @@ export default function SmsRead() {
   const router = useRouter()
   const [contacts, fetchContactNextPage] = useContact(linkZone)
   const [sms, changeContact, fetchSmsNextPage] = useSms(linkZone)
-
+  const [text, setText] = useState("")
   const [contactId, setContactId] = useState(null);
 
   const handleContactChange = (i) => {
     setContactId(i)
     changeContact(i)
+  }
+
+  const handleSubmitSms = async () => {
+    const phone = contacts.SmsList.find(item => item.ContactId === contactId).PhoneNumber;
+    await linkZone.sendSms(text, phone);
+    setContactId(contactId);
+    setText("");
   }
 
   const contactsRef = useRef();
@@ -83,7 +90,7 @@ export default function SmsRead() {
               </div>
               <div className="relative w-full p-6 overflow-y-scroll h-[40rem]" ref={smsRef} onScroll={() => onScrollMessages()} style={{ height: '70vh' }}>
                 {sms && <ul className="space-y-2">                  
-                  {sms?.SmsList?.reverse().map(({SmsId, SmsContent, SmsDate, SmsType}) => <li className={SmsType === 1 ? "flex justify-start" : "flex justify-end"}>
+                  {sms?.SmsList?.map(({SmsId, SmsContent, SmsDate, SmsType}) => <li className={SmsType === 1 ? "flex justify-start" : "flex justify-end"}>
                     <div className="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow bg-gray-100">
                         <span className="block">
                           {SmsContent}
@@ -96,13 +103,14 @@ export default function SmsRead() {
               </div>
               <div className="flex items-center justify-between w-full p-3 border-t border-gray-300">
                 <input
+                  onChange={(e) => setText(e.target.value)}
                   type="text"
                   placeholder="Message"
                   className="block w-full py-2 pl-4 mx-3 bg-gray-100 rounded-full outline-none focus:text-gray-700"
                   name="message"
                   required=""
                 />
-                <button type="submit">
+                <button type="submit" onClick={handleSubmitSms}>
                   <svg
                     className="w-5 h-5 text-gray-500 origin-center transform rotate-90"
                     xmlns="http://www.w3.org/2000/svg"
