@@ -439,7 +439,7 @@ export default class LinkZone {
 
   sendSms(content, phoneNumber) {
     
-    return this.sendSms(content, phoneNumber).then(res => {
+    return this.getSendSms(content, phoneNumber).then(res => {
       return this.sleep(5000).then(res => {
         return this.getSmsResult().then(res => {
           return res
