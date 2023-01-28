@@ -29,7 +29,7 @@ export default function NetworkSettings() {
           </h3>
           <div className="mt-2">
             <label className="text-sm text-gray-500 flex">
-              Dirección IP
+              Dirección IP del LinkZone
             </label>
             <input type="text" className="p-2 mt-3 rounded border-2 border-gray-400 text-gray-800" placeholder="Dirección IP" value={url} onChange={(e) => setUrl(e.target.value)} />
           </div>
