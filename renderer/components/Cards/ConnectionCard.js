@@ -35,9 +35,13 @@ export default function ConnectionCard({
   }
 
   function cronJob () {
-    linkZoneController.getSmsList();
-    linkZoneController.getSmsContentList(0, 11);
-    linkZoneController.deleteSms(65572, 3);
+
+    // testing delete this
+    // linkZoneController.getSmsList();
+    // linkZoneController.getSmsContentList(0, 11);
+    // linkZoneController.deleteSms(65572, 3);
+
+    linkZoneController.getSmsStorageState()
 
     setLoadingNetwork(true)
     linkZoneController.getNetworkSettings().then(netData => {
@@ -50,8 +54,6 @@ export default function ConnectionCard({
         setSetNetworkData(netData)
         setToggleConnection(data?.Connected)
         setNetworkSelectDisabled(netData.NetworkStatus)
-        // console.log('toggleEnabled', toggleEnabled)
-        // console.log(netData)
       })
     })
   }

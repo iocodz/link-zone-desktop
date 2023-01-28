@@ -392,6 +392,28 @@ export default class LinkZone {
     })
   }
 
+  getSmsStorageState() {
+    
+    const data = {
+      jsonrpc: "2.0",
+      method: "GetSMSStorageState",
+      id: "6.4"
+    }
+
+    return this.linkZoneRequest(data).then(res => {
+      const result = {
+        "UnreadReport": res?.result?.UnreadReport,
+        "LeftCount": res?.result?.LeftCount,
+        "MaxCount": res?.result?.MaxCount,
+        "TUseCount": res?.result?.TUseCount,
+        "UnreadSMSCount": res?.result?.UnreadSMSCount
+      }
+
+      console.log('getSmsStorageState', result)
+      return result
+    })
+  }
+
   getSmsResult() {
 
     const data = {
