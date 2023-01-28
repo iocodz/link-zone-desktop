@@ -13,7 +13,7 @@ export default function AboutAndDonations() {
       <Modal open={open} onCancel={toggleModal}>
         <div className="mt-3 sm:mt-0 sm:ml-4 sm:text-left">
           <h3 className="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-            Acerca de
+            Nosotros
           </h3>
           <div className="mt-2">
             <p className="text-sm text-gray-500 mb-1">
@@ -25,6 +25,14 @@ export default function AboutAndDonations() {
                 className="text-blue-600 font-bold ml-1 cursor-pointer underline"
                 onClick={() => require('electron').shell.openExternal("https://github.com/raulcr98/link-zone-desktop")}
               >GitHub</a>
+            </p>
+          </div>
+          <h3 className="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+            Donaciones
+          </h3>
+          <div className="mt-2">
+            <p className="text-sm text-gray-500 mb-1">
+              <img className="w-1/2" src="/images/donations.jpg" />
             </p>
           </div>
         </div>
