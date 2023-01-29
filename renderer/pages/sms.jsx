@@ -1,29 +1,31 @@
-import { useRouter } from "next/router"
-import { useEffect, useRef, useState } from "react"
-import { useContact } from "../hooks/useContact"
-import { useSms } from "../hooks/useSms"
-import LinkZone from "../types/LinkZone"
+import { useRouter } from "next/router";
+import { useEffect, useRef, useState } from "react";
+import { useContact } from "../hooks/useContact";
+import { useSms } from "../hooks/useSms";
+import LinkZone from "../LinkZone";
 
 export default function SmsRead() {
-  const linkZone = new LinkZone()
+  const linkZone = new LinkZone();
 
-  const router = useRouter()
-  const [contacts, fetchContactNextPage] = useContact(linkZone)
-  const [sms, changeContact, fetchSmsNextPage] = useSms(linkZone)
-  const [text, setText] = useState("")
+  const router = useRouter();
+  const [contacts, fetchContactNextPage] = useContact(linkZone);
+  const [sms, changeContact, fetchSmsNextPage] = useSms(linkZone);
+  const [text, setText] = useState("");
   const [contactId, setContactId] = useState(null);
 
   const handleContactChange = (i) => {
-    setContactId(i)
-    changeContact(i)
-  }
+    setContactId(i);
+    changeContact(i);
+  };
 
   const handleSubmitSms = async () => {
-    const phone = contacts.SmsList.find(item => item.ContactId === contactId).PhoneNumber;
+    const phone = contacts.SmsList.find(
+      (item) => item.ContactId === contactId
+    ).PhoneNumber;
     await linkZone.sendSms(text, phone);
     setContactId(contactId);
     setText("");
-  }
+  };
 
   const contactsRef = useRef();
 
@@ -31,7 +33,7 @@ export default function SmsRead() {
     if (contactsRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = contactsRef.current;
       if (scrollTop + clientHeight + 1 >= scrollHeight) {
-        fetchContactNextPage()
+        fetchContactNextPage();
       }
     }
   };
@@ -40,42 +42,63 @@ export default function SmsRead() {
 
   const onScrollMessages = () => {
     if (smsRef.current) {
-      const { scrollTop  } = smsRef.current;
-      if (scrollTop <=1) {
-        fetchSmsNextPage()
+      const { scrollTop } = smsRef.current;
+      if (scrollTop <= 1) {
+        fetchSmsNextPage();
       }
     }
   };
 
   useEffect(() => {
-    if(smsRef.current)
+    if (smsRef.current)
       smsRef.current.scrollTo(0, smsRef.current.scrollHeight, "auto");
-  }, [sms])
+  }, [sms]);
 
   return (
     <>
-      <div className="bg-white container mx-auto" style={{ height: '100vh' }}>
+      <div className="bg-white container mx-auto" style={{ height: "100vh" }}>
         <div className="min-w-full h-full overflow-hidden border rounded lg:grid lg:grid-cols-3">
           <div className="border-r border-gray-300 lg:col-span-1">
             <ul className="overflow-auto h-[32rem]">
-              <li className="overflow-y-scroll" ref={contactsRef} onScroll={() => onScrollContacts()} style={{ height: '100vh' }}>
-                {contacts?.SmsList?.map(({ContactId, LastSmsDate, LastSmsPreview, PhoneNumber, TotalCount, UnreadCount}, i) => 
-                  <a 
-                    onClick={() => handleContactChange(ContactId)} 
-                    className={`flex items-center px-3 py-2 text-sm transition duration-150 ease-in-out border-b border-gray-300 cursor-pointer hover:bg-gray-100 focus:outline-none ${contactId == ContactId ? 'bg-gray-100' : ''}`}
-                  >
-                    <div className="w-full pb-2 pt-2">
-                      <div className="flex justify-between">
-                        <span className="block ml-2 font-semibold text-gray-600">
-                          {PhoneNumber}
-                        </span>
+              <li
+                className="overflow-y-scroll"
+                ref={contactsRef}
+                onScroll={() => onScrollContacts()}
+                style={{ height: "100vh" }}
+              >
+                {contacts?.SmsList?.map(
+                  (
+                    {
+                      ContactId,
+                      LastSmsDate,
+                      LastSmsPreview,
+                      PhoneNumber,
+                      TotalCount,
+                      UnreadCount,
+                    },
+                    i
+                  ) => (
+                    <a
+                      onClick={() => handleContactChange(ContactId)}
+                      className={`flex items-center px-3 py-2 text-sm transition duration-150 ease-in-out border-b border-gray-300 cursor-pointer hover:bg-gray-100 focus:outline-none ${
+                        contactId == ContactId ? "bg-gray-100" : ""
+                      }`}
+                    >
+                      <div className="w-full pb-2 pt-2">
+                        <div className="flex justify-between">
+                          <span className="block ml-2 font-semibold text-gray-600">
+                            {PhoneNumber}
+                          </span>
+                          <span className="block ml-2 text-sm text-gray-600">
+                            {LastSmsDate}
+                          </span>
+                        </div>
                         <span className="block ml-2 text-sm text-gray-600">
-                          {LastSmsDate}
+                          {LastSmsPreview}
                         </span>
                       </div>
-                      <span className="block ml-2 text-sm text-gray-600">{LastSmsPreview}</span>
-                    </div>
-                  </a>
+                    </a>
+                  )
                 )}
               </li>
             </ul>
@@ -84,22 +107,55 @@ export default function SmsRead() {
             <div className="h-full w-full flex flex-col justify-between">
               <div className="relative flex justify-between items-center p-3 border-b border-gray-300 text-gray-800">
                 <div></div>
-                <svg onClick={() => router.push('/home')} xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 cursor-pointer rounded-full hover:bg-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  onClick={() => router.push("/home")}
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 cursor-pointer rounded-full hover:bg-gray-200"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </div>
-              <div className="relative w-full p-6 overflow-y-scroll h-[40rem]" ref={smsRef} onScroll={() => onScrollMessages()} style={{ height: '70vh' }}>
-                {sms && <ul className="space-y-2">                  
-                  {sms?.SmsList?.map(({SmsId, SmsContent, SmsDate, SmsType}) => <li className={SmsType === 1 ? "flex justify-start" : "flex justify-end"}>
-                    <div className="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow bg-gray-100">
-                        <span className="block">
-                          {SmsContent}
-                        </span>
-                        <span className="text-sm text-gray-400">{SmsDate}</span>
-                      </div>
-                    </li>
-                  )}
-                </ul>}
+              <div
+                className="relative w-full p-6 overflow-y-scroll h-[40rem]"
+                ref={smsRef}
+                onScroll={() => onScrollMessages()}
+                style={{ height: "70vh" }}
+              >
+                {sms && (
+                  <ul className="space-y-2">
+                    {sms?.SmsList?.map(
+                      ({ SmsId, SmsContent, SmsDate, SmsType }) => (
+                        <li
+                          key={SmsId}
+                          className={
+                            SmsType === "1"
+                              ? "flex justify-start"
+                              : "flex justify-end"
+                          }
+                        >
+                          <div
+                            className={`bg-${
+                              SmsType === "1" ? "gray" : "green"
+                            }-100 relative max-w-xl px-4 py-2 text-gray-700 rounded shadow`}
+                          >
+                            <span className="block">{SmsContent}</span>
+                            <span className="text-sm text-gray-400">
+                              {SmsDate}
+                            </span>
+                          </div>
+                        </li>
+                      )
+                    )}
+                  </ul>
+                )}
               </div>
               <div className="flex items-center justify-between w-full p-3 border-t border-gray-300">
                 <input
@@ -126,5 +182,5 @@ export default function SmsRead() {
         </div>
       </div>
     </>
-  )
+  );
 }
