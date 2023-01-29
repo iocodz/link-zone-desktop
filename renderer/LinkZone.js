@@ -1,4 +1,4 @@
-import { getLinkZoneUrl, linkZoneApiUrl } from "../config";
+import { getLinkZoneUrl, linkZoneApiUrl } from "./config";
 
 export default class LinkZone {
   proxyURL;

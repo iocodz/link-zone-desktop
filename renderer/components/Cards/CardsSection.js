@@ -1,7 +1,7 @@
-import ConnectionCard from "../components/Cards/ConnectionCard";
-import UssdCard from "../components/Cards/UssdCard";
+import ConnectionCard from "./ConnectionCard";
+import UssdCard from "./UssdCard";
 import { useRouter } from 'next/router'
-import { useContact } from "../hooks/useContact";
+import { useContact } from "../../hooks/useContact";
 import { useEffect, useState } from "react";
 
 export default function CardsSection({ linkZone }) {
