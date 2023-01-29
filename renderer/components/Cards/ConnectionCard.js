@@ -1,69 +1,19 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useRef } from "react";
+import { useConnection } from "../../hooks/useConnection";
 import Spinner from "../UI/Spinner";
 
-export default function ConnectionCard({ linkZoneController }) {
-  const [toggleConnection, setToggleConnection] = useState(false);
-  const [systemStatus, setSystemStatus] = useState({});
-  const [networkData, setSetNetworkData] = useState({});
-  const [runningCronJob, setRunningCronJob] = useState(true);
-  const [loadingNetwork, setLoadingNetwork] = useState(false);
-  const [networkSelectDisabled, setNetworkSelectDisabled] = useState(true);
-
+export default function ConnectionCard() {
+  const [
+    toggleConnection,
+    systemStatus,
+    networkData,
+    loadingNetwork,
+    networkSelectDisabled,
+    handleToggleConnection,
+    handleNetworkType,
+  ] = useConnection();
+  
   const network = useRef();
-
-  function handleToggleConnection() {
-    setLoadingNetwork(true);
-    if (!toggleConnection)
-      linkZoneController.connect().then((data) => {
-        cronJob();
-        setToggleConnection(true);
-        setLoadingNetwork(false);
-      });
-    else
-      linkZoneController.disconnect().then((data) => {
-        cronJob();
-        setToggleConnection(false);
-        setLoadingNetwork(false);
-      });
-  }
-
-  function cronJob() {
-    // testing delete this
-    // linkZoneController.getSmsList();
-    // linkZoneController.getSmsContentList(0, 11);
-    // linkZoneController.deleteSms(65572, 3);
-
-    linkZoneController.getSmsStorageState();
-
-    setLoadingNetwork(true);
-    linkZoneController.getNetworkSettings().then((netData) => {
-      linkZoneController.getSystemStatus().then((data) => {
-        if (data === systemStatus) return;
-
-        setLoadingNetwork(false);
-        setSystemStatus(data);
-        setSetNetworkData(netData);
-        setToggleConnection(data?.Connected);
-        setNetworkSelectDisabled(netData.NetworkStatus);
-      });
-    });
-  }
-
-  useEffect(() => {
-    cronJob();
-    const timer = setInterval(() => {
-      if (runningCronJob) cronJob();
-    }, 10000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  function handleNetworkType() {
-    setLoadingNetwork(true);
-    linkZoneController.setNetwork(network.current.value).then((res) => {
-      cronJob();
-    });
-    // .finally();
-  }
 
   return (
     <div className="rounded-lg w-72 p-4 bg-white shadow-lg dark:bg-gray-800 max-w-xs m-5">
@@ -214,7 +164,7 @@ export default function ConnectionCard({ linkZoneController }) {
           <label className="block text-left w-full">
             <select
               className="form-select rounded-md border border-gray-300 outline-none block w-full mt-1 p-2 focus:outline-none focus:ring"
-              onChange={() => handleNetworkType()}
+              onChange={() => handleNetworkType(network.current.value)}
               ref={network}
               value={networkData?.NetworkMode}
               defaultValue={networkData?.NetworkMode}
