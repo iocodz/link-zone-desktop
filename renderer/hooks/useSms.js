@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import LinkZone from "../LinkZone";
 
 const def = {
   Page: 0,
@@ -8,17 +9,22 @@ const def = {
     {
       SmsId: 1,
       SmsContent: "Selecciona un chat para empezar...",
-      SmsDate: new Date().toISOString().replace("T", " ").substring(0, 19)
+      SmsDate: new Date().toISOString().replace("T", " ").substring(0, 19),
+      SmsType: "1"
     },
     {
-      SmsId: 1,
+      SmsId: 2,
       SmsContent: "Gracias por usar la aplicación.",
-      SmsDate: new Date().toISOString().replace("T", " ").substring(0, 19)
+      SmsDate: new Date().toISOString().replace("T", " ").substring(0, 19),
+      SmsType: "2"
     }
   ]
 }
 
-export function useSms(linkZoneController) {
+const Context = createContext();
+
+export function SmsProvider({ children }) {
+  const linkZoneController = new LinkZone()
   const [sms, setSms] = useState(def)
   const [page, setPage] = useState(0)
   const [contact, setContact] = useState(null)
@@ -62,5 +68,9 @@ export function useSms(linkZoneController) {
     getSms(true);
   }, [contact])
 
-  return [sms, changeContact, fetchSmsNextPage];
+  return <Context.Provider value={[sms, changeContact, fetchSmsNextPage]}>{children}</Context.Provider>;
+}
+
+export function useSms() {
+  return useContext(Context);
 }

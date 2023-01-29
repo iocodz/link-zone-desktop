@@ -1,22 +1,9 @@
-import { useEffect, useState } from "react";
-import LinkZone from "../types/LinkZone";
+import { createContext, useContext, useEffect, useState } from "react";
+import LinkZone from "../LinkZone";
 
-const example = {
-  Page: 0,
-  TotalPageCount: 1,
-  SmsList: [
-    {
-      ContactId: 1,
-      PhoneNumber: "+5353535353",
-      LastSmsDate: "21-07-2021 10:00:00",
-      LastSmsPreview: "Hola como estas, esto es una prueba, gracias...",
-      TotalCount: 10,
-      UnreadCount: 0
-    }
-  ]
-};
+const Context = createContext();
 
-export function useContact() {
+export function ContactProvider({ children }) {
   const linkZoneController = new LinkZone()
   const [contact, setContact] = useState([])
   const [page, setPage] = useState(0)
@@ -54,5 +41,9 @@ export function useContact() {
     getContact()
   }, [page]);
 
-  return [contact, fetchContactNextPage, getUnread];
+  return <Context.Provider value={[contact, fetchContactNextPage, getUnread]}>{children}</Context.Provider>;
+}
+
+export function useContact() {
+  return useContext(Context);
 }
