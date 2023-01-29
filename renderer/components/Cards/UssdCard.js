@@ -5,7 +5,7 @@ import Spinner from "../UI/Spinner";
 const USSD_AUTOCOMPLETE_PLACEHOLDER = 'Ingrese su código USSD';
 const DEFAULT_USSD = {value: '', label: USSD_AUTOCOMPLETE_PLACEHOLDER}
 
-export default function ConectionCard({ linkZoneController }) {
+export default function UssdCard({ linkZoneController }) {
 
   const [ussdSelectedValue, setUssdSelectedValue] = useState("")
   const [ussdValue, setUssdValue] = useState(DEFAULT_USSD)
