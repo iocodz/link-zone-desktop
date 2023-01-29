@@ -68,7 +68,7 @@ export function SmsProvider({ children }) {
     getSms(true);
   }, [contact])
 
-  return <Context.Provider value={[sms, changeContact, fetchSmsNextPage]}>{children}</Context.Provider>;
+  return <Context.Provider value={[sms, contact, changeContact, fetchSmsNextPage]}>{children}</Context.Provider>;
 }
 
 export function useSms() {
