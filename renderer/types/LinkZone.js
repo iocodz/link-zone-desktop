@@ -402,11 +402,11 @@ export default class LinkZone {
 
     return this.linkZoneRequest(data).then(res => {
       const result = {
-        "UnreadReport": res?.result?.UnreadReport,
-        "LeftCount": res?.result?.LeftCount,
-        "MaxCount": res?.result?.MaxCount,
-        "TUseCount": res?.result?.TUseCount,
-        "UnreadSMSCount": res?.result?.UnreadSMSCount
+        UnreadReport: res?.result?.UnreadReport,
+        LeftCount: res?.result?.LeftCount,
+        MaxCount: res?.result?.MaxCount,
+        TUseCount: res?.result?.TUseCount,
+        UnreadSMSCount: res?.result?.UnreadSMSCount
       }
 
       console.log('getSmsStorageState', result)
