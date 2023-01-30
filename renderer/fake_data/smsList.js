@@ -7,7 +7,7 @@ export const smsList = {
         SmsId: 1,
         SmsContent: "Selecciona 2 un chat para empezar...",
         SmsDate: new Date().toLocaleString(),
-        SmsType: 1
+        SMSType: 1
       },
       {
         SmsId: 1,

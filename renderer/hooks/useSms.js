@@ -10,13 +10,13 @@ const def = {
       SmsId: 1,
       SmsContent: "Selecciona un chat para empezar...",
       SmsDate: new Date().toISOString().replace("T", " ").substring(0, 19),
-      SmsType: "1"
+      SMSType: "0"
     },
     {
       SmsId: 2,
       SmsContent: "Gracias por usar la aplicación.",
       SmsDate: new Date().toISOString().replace("T", " ").substring(0, 19),
-      SmsType: "2"
+      SMSType: "2"
     }
   ]
 }
@@ -44,6 +44,7 @@ export function SmsProvider({ children }) {
       newData.SmsList = newData.SmsList.sort((a, b) => {
         return new Date(a.SmdId) - new Date(b.SmdId);
       })
+      console.log('smsContentList', newData)
       setSms(newData)
     }
   }
