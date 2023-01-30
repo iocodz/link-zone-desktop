@@ -132,18 +132,18 @@ export default function SmsRead() {
                 {sms && (
                   <ul className="space-y-2">
                     {sms?.SmsList?.map(
-                      ({ SmsId, SmsContent, SmsDate, SmsType }) => (
+                      ({ SmsId, SmsContent, SmsDate, SMSType }) => (
                         <li
                           key={SmsId}
                           className={
-                            SmsType === "1"
+                            SMSType == 0
                               ? "flex justify-start"
                               : "flex justify-end"
                           }
                         >
                           <div
                             className={`bg-${
-                              SmsType === "1" ? "gray" : "green"
+                              SMSType == 0 ? "gray" : "green"
                             }-100 relative max-w-xl px-4 py-2 text-gray-700 rounded shadow`}
                           >
                             <span className="block">{SmsContent}</span>
