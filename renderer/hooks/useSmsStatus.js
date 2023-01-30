@@ -13,6 +13,9 @@ export function SmsStatusProvider({ children }) {
 
   const refreshData = async () => {
     const { UnreadSMSCount } = await linkZoneController.getSmsStorageState();
+    
+    if(!UnreadSMSCount) return;
+    
     setUnread(UnreadSMSCount);
     localStorage.setItem("unreadSms", UnreadSMSCount);
 
