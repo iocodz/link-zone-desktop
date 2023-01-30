@@ -28,11 +28,6 @@ export function ContactProvider({ children }) {
     setPage(page + 1)
   }
 
-  async function getUnread() {
-    const unreadMessages = contact.SmsList.reduce((acc, obj) => acc + obj.UnreadCount, 0)
-    return unreadMessages
-  }
-
   useEffect(async () => {
     getContact()
   }, []);
@@ -41,7 +36,7 @@ export function ContactProvider({ children }) {
     getContact()
   }, [page]);
 
-  return <Context.Provider value={[contact, fetchContactNextPage, getUnread]}>{children}</Context.Provider>;
+  return <Context.Provider value={[contact, fetchContactNextPage]}>{children}</Context.Provider>;
 }
 
 export function useContact() {

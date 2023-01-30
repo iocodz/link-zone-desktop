@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React from "react";
 import { useState, useEffect } from "react";
 import Providers from "../components/Providers";
@@ -6,6 +7,7 @@ import Loading from "../components/UI/Loading";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
+  const router = useRouter();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
