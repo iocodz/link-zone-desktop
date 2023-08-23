@@ -14,7 +14,7 @@ App de escritorio para manejar fácilmente tu Link Zone de la infame Etecsa.
 ```
 $ cd my-app
 
-# using yarn or npm
+# using yarn or npm 
 $ yarn (or `npm install`)
 
 # using pnpm
